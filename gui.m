@@ -168,6 +168,7 @@ global result;
 data = get(handles.com_out,'String');
 data
 comport = strcat('\\.\COM',data)
+EPOCommunications('close');
 result = EPOCommunications('open',comport);
 
 
@@ -230,17 +231,16 @@ function figure1_KeyPressFcn(hObject, eventdata, handles)
 %	Character: character interpretation of the key(s) that was pressed
 %	Modifier: name(s) of the modifier key(s) (i.e., control, shift) pressed
 % handles    structure with handles and user data (see GUIDATA)
-key = get(handles.figure1, 'CurrentCharacter')
-if key==119 | key==87 %w
+key = get(handles.figure1, 'CurrentCharacter');
+if key==119 || key==87 %w
     voor_Callback(hObject, eventdata, handles);
-elseif key==115 | key==83 %s
+elseif key==115 || key==83 %s
     achter_Callback(hObject, eventdata, handles);
-elseif key == 97
+elseif key == 97 || key==65  %a
     links_Callback(hObject, eventdata, handles);
-elseif key == 100
+elseif key == 100 || key==68 %d
     rechts_Callback(hObject, eventdata, handles);
-else
+else %alle andere toetsen
     stop_Callback(hObject, eventdata, handles);
-   
 end
     
