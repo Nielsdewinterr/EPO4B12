@@ -22,7 +22,7 @@ function varargout = gui(varargin)
 
 % Edit the above text to modify the response to help gui
 
-% Last Modified by GUIDE v2.5 19-Apr-2016 17:21:40
+% Last Modified by GUIDE v2.5 19-Apr-2016 18:17:44
 
 % Begin initialization code - DO NOT EDIT
 gui_Singleton = 1;
@@ -63,6 +63,7 @@ global speed; speed = 150;
 global last_speed;last_speed = 150;
 global direction; speed = 150;
 global last_direction; last_direction = 150;
+global log;log='';
 
 % UIWAIT makes gui wait for user response (see UIRESUME)
 % uiwait(handles.figure1);
@@ -84,7 +85,7 @@ function stop_Callback(hObject, eventdata, handles)
 % hObject    handle to stop (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
-
+logdata('stop',handles);%updating log
 global speed; speed=150; %set speed
 global last_speed; last_speed=150; %reset last speed
 set(handles.text_speed,'String',150); %set speed text
@@ -101,6 +102,7 @@ function nav_speed_Callback(hObject, eventdata, handles)
 
 global speed;
 speed = get(hObject,'Value');
+logdata(strcat('speed: ',speed),handles);%updating log
 set(handles.text_speed,'String',speed); %set speed text
 %status = EPOCommunications('transmit', strcat('D',speed); 
 
@@ -114,6 +116,7 @@ function nav_dir_Callback(hObject, eventdata, handles)
 
 global direction;
 direction = 300-get(hObject,'Value');%300-value because of slider orientation
+logdata(strcat('direction: ',direction),handles);%updating log
 set(handles.text_dir,'String',direction); %set direction text
 %status = EPOCommunications('transmit', strcat('D',direction);
 
@@ -158,9 +161,10 @@ function voor_Callback(hObject, eventdata, handles)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
 
+logdata('speed: 165',handles);%updating log
 global speed; speed=165; %set speed
-set(handles.text_speed,'String','200'); %set speedtext
-set(handles.nav_speed,'Value',199); %set speed slider
+set(handles.text_speed,'String','165'); %set speedtext
+set(handles.nav_speed,'Value',165); %set speed slider
 %status = EPOCommunications('transmit', 'M165');
 %11
 
@@ -172,9 +176,10 @@ function achter_Callback(hObject, eventdata, handles)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
 
-global speed; speed=100; %set speed
-set(handles.text_speed,'String','100'); %set speedtext
-set(handles.nav_speed,'Value',101); %set speed slider
+logdata('speed: 142',handles);%updating log
+global speed; speed=142; %set speed
+set(handles.text_speed,'String','142'); %set speedtext
+set(handles.nav_speed,'Value',142); %set speed slider
 %status = EPOCommunications('transmit', 'M142');
 %12
 
@@ -184,6 +189,7 @@ function links_Callback(hObject, eventdata, handles)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
 
+logdata('direction: 200',handles);%updating log
 global direction; direction=200; %set direction
 set(handles.text_dir,'String','200'); %set direction text
 set(handles.nav_dir,'Value',101); %set direction slider
@@ -195,6 +201,7 @@ function rechts_Callback(hObject, eventdata, handles)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
 
+logdata('direction: 100',handles);%updating log
 global direction; direction=100; %set direction
 set(handles.text_dir,'String','100'); %set direction text
 set(handles.nav_dir,'Value',199); %set (negative) direction slider
@@ -207,6 +214,7 @@ function straight_Callback(hObject, eventdata, handles)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
 
+logdata('direction: 150',handles);%updating log
 global direction; direction=150; %set direction
 set(handles.text_dir,'String','150'); %set direction text
 set(handles.nav_dir,'Value',150); %set (negative) direction slider
@@ -222,11 +230,18 @@ global result;
 % handles    structure with handles and user data (see GUIDATA)
 data = get(handles.com_out,'String')
 comport = strcat('\\.\COM',data);
+EPOCommunications('close'); %close any unwanted open connections
+result = EPOCommunications('open',comport); %open the wanted connection
+logdata('---------',handles);%updating log
+logdata('opened connection',handles);%updating log
+
+% --- Executes on button press in disconnect.
+function disconnect_Callback(hObject, eventdata, handles)
+% hObject    handle to disconnect (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
 EPOCommunications('close');
-result = EPOCommunications('open',comport);
-
-
-
+logdata('closed connection(s)',handles);%updating log
 
 function com_out_Callback(hObject, eventdata, handles)
 % hObject    handle to com_out (see GCBO)
@@ -289,6 +304,12 @@ if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgr
     set(hObject,'BackgroundColor','white');
 end
 
+function logdata(logcode,handles)
+global log; 
+log=sprintf('%s\n%s',log,logcode);
+set(handles.list_log,'String',log);
+currentItems =size(get(handles.list_log,'String'));
+set(handles.list_log,'Value',currentItems(1));
 
 % --- Executes on key press with focus on figure1 and none of its controls.
 function figure1_KeyPressFcn(hObject, eventdata, handles)
@@ -309,4 +330,27 @@ elseif key == 100 || key==68 %d
     rechts_Callback(hObject, eventdata, handles);
 else %alle andere toetsen
     stop_Callback(hObject, eventdata, handles);
+end
+
+
+% --- Executes on selection change in list_log.
+function list_log_Callback(hObject, eventdata, handles)
+% hObject    handle to list_log (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+% Hints: contents = cellstr(get(hObject,'String')) returns list_log contents as cell array
+%        contents{get(hObject,'Value')} returns selected item from list_log
+
+
+% --- Executes during object creation, after setting all properties.
+function list_log_CreateFcn(hObject, eventdata, handles)
+% hObject    handle to list_log (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    empty - handles not created until after all CreateFcns called
+
+% Hint: listbox controls usually have a white background on Windows.
+%       See ISPC and COMPUTER.
+if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
+    set(hObject,'BackgroundColor','white');
 end
