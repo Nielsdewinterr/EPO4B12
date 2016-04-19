@@ -22,7 +22,7 @@ function varargout = gui(varargin)
 
 % Edit the above text to modify the response to help gui
 
-% Last Modified by GUIDE v2.5 19-Apr-2016 11:20:31
+% Last Modified by GUIDE v2.5 19-Apr-2016 12:22:56
 
 % Begin initialization code - DO NOT EDIT
 gui_Singleton = 1;
@@ -131,8 +131,8 @@ function voor_Callback(hObject, eventdata, handles)
 % hObject    handle to voor (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
-%status = EPOCommunications('transmit', 'M165');
-11
+status = EPOCommunications('transmit', 'M165');
+
 
 
 
@@ -141,8 +141,8 @@ function achter_Callback(hObject, eventdata, handles)
 % hObject    handle to achter (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
-%status = EPOCommunications('transmit', 'M142');
-12
+status = EPOCommunications('transmit', 'M142');
+
 
 % --- Executes on button press in links.
 function links_Callback(hObject, eventdata, handles)
@@ -168,6 +168,7 @@ global result;
 data = get(handles.com_out,'String');
 data
 comport = strcat('\\.\COM',data)
+EPOCommunications('close');
 result = EPOCommunications('open',comport);
 
 
@@ -235,6 +236,10 @@ if key==119 | key==87 %w
     voor_Callback(hObject, eventdata, handles);
 elseif key==115 | key==83 %s
     achter_Callback(hObject, eventdata, handles);
+elseif key==97 | key==65 %a
+    links_Callback(hObject, eventdata, handles);
+elseif key==68 | key==100 %d
+    rechts_Callback(hObject, eventdata, handles);    
 else
     stop_Callback(hObject, eventdata, handles);
 end
