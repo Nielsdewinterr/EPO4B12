@@ -1,1 +1,10 @@
+Bijwerken Kitt Datasheet
+
+
 - Top snelheid proef
+Bluetooth:
+- Range
+- Delay
+
+US:
+- Leeftijd bij ontvangst in pc
