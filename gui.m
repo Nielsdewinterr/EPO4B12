@@ -328,6 +328,8 @@ elseif key == 97 || key==65  %a
     links_Callback(hObject, eventdata, handles);
 elseif key == 100 || key==68 %d
     rechts_Callback(hObject, eventdata, handles);
+elseif key == 108 || key==76 %l
+    EPOfunctions.status(hObject, eventdata, handles);
 else %alle andere toetsen
     stop_Callback(hObject, eventdata, handles);
 end

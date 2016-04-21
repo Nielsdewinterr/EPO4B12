@@ -1,0 +1,24 @@
+classdef EPOfunctions
+    properties
+    end
+methods(Static)
+    
+    function status = status(hObject, eventdata, handles)
+        %stat = EPOCommunications('transmit','S');
+        stat = '************************** * Audio Beacon: on * c: 0x00000000 * f_c: xxxxx * f_b: xxxxx * c_r: xxx ************************** * PWM: * Dir. xxx * Mot. xxx ************************** * Sensors: * Dist. L xxx R xxx * V_batt xx.x V ********************';
+        getdata = strread(stat,'%s');
+        l=length(getdata);
+        i=1;
+        while(i<l)
+            switch char(getdata(i))
+                case 'Beacon:'
+                    find(strcmp('Beacon:',getdata
+                otherwise
+            end
+            i=i+1;
+        end
+        
+    end
+    
+end
+end

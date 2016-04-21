@@ -58,12 +58,7 @@ handles.output = hObject;
 % Update handles structure
 guidata(hObject, handles);
 
-% create speed and angle
-global speed; speed = 150;
-global last_speed;last_speed = 150;
-global direction; speed = 150;
-global last_direction; last_direction = 150;
-global log;log='';
+global gui_f; gui_f = gui_functions();
 
 % UIWAIT makes gui wait for user response (see UIRESUME)
 % uiwait(handles.figure1);
@@ -309,7 +304,7 @@ global log;
 log=sprintf('%s\n%s',log,logcode);
 set(handles.list_log,'String',log);
 currentItems =size(get(handles.list_log,'String'));
-set(handles.list_log,WacurrentItems(1)
+set(handles.list_log,'Value',currentItems(1));
 
 % --- Executes on key press with focus on figure1 and none of its controls.
 function figure1_KeyPressFcn(hObject, eventdata, handles)
@@ -319,18 +314,7 @@ function figure1_KeyPressFcn(hObject, eventdata, handles)
 %	Character: character interpretation of the key(s) that was pressed
 %	Modifier: name(s) of the modifier key(s) (i.e., control, shift) pressed
 % handles    structure with handles and user data (see GUIDATA)
-key = get(handles.figure1, 'CurrentCharacter');
-if key==119 || key==87 %w
-    voor_Callback(hObject, eventdata, handles);
-elseif key==115 || key==83 %s
-    achter_Callback(hObject, eventdata, handles);
-elseif key == 97 || key==65  %a
-    links_Callback(hObject, eventdata, handles);
-elseif key == 100 || key==68 %d
-    rechts_Callback(hObject, eventdata, handles);
-else %alle andere toetsen
-    stop_Callback(hObject, eventdata, handles);
-end
+global gui_f.KeyPressFcn(hObject, eventdata, handles);
 
 
 % --- Executes on selection change in list_log.
