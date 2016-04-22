@@ -4,8 +4,9 @@ classdef EPOfunctions
 methods(Static)
     
     function status = status(hObject, eventdata, handles)
-        %stat = EPOCommunications('transmit','S');
-        stat = '************************** * Audio Beacon: on * c: 0x00000000 * f_c: xxxxx * f_b: xxxxx * c_r: xxx ************************** * PWM: * Dir. xxx * Mot. xxx ************************** * Sensors: * Dist. L xxx R xxx * V_batt xx.x V ********************';
+        
+        stat = EPOCommunications('transmit','S');
+        %stat = '************************** * Audio Beacon: on * c: 0x00000000 * f_c: xxxxx * f_b: xxxxx * c_r: xxx ************************** * PWM: * Dir. xxx * Mot. xxx ************************** * Sensors: * Dist. L xxx R xxx * V_batt xx.x V ********************';
         getdata = strread(stat,'%s');
         l=length(getdata);
         i=1;
@@ -51,7 +52,6 @@ methods(Static)
             end
             i=i+1;
         end
-        
     end
     
 end

@@ -90,7 +90,7 @@ global speed; speed=150; %set speed
 global last_speed; last_speed=150; %reset last speed
 set(handles.text_speed,'String',150); %set speed text
 set(handles.nav_speed,'Value',150); %set speed slider
-%status = EPOCommunications('transmit', 'M150');
+status = EPOCommunications('transmit', 'M150');
 
 % --- Executes on speed slider movement.
 function nav_speed_Callback(hObject, eventdata, handles)
@@ -104,7 +104,7 @@ global speed;
 speed = get(hObject,'Value');
 logdata(strcat('speed: ',speed),handles);%updating log
 set(handles.text_speed,'String',speed); %set speed text
-%status = EPOCommunications('transmit', strcat('D',speed); 
+status = EPOCommunications('transmit', strcat('D',speed)); 
 
 % --- Executes on direction slider movement.
 function nav_dir_Callback(hObject, eventdata, handles)
@@ -118,7 +118,7 @@ global direction;
 direction = 300-get(hObject,'Value');%300-value because of slider orientation
 logdata(strcat('direction: ',direction),handles);%updating log
 set(handles.text_dir,'String',direction); %set direction text
-%status = EPOCommunications('transmit', strcat('D',direction);
+status = EPOCommunications('transmit', strcat('D',direction));
 
 
 % --- Executes during object creation, after setting all properties.
@@ -161,11 +161,11 @@ function voor_Callback(hObject, eventdata, handles)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
 
-logdata('speed: 165',handles);%updating log
-global speed; speed=165; %set speed
-set(handles.text_speed,'String','165'); %set speedtext
-set(handles.nav_speed,'Value',165); %set speed slider
-%status = EPOCommunications('transmit', 'M165');
+logdata('speed: 157',handles);%updating log
+global speed; speed=157; %set speed
+set(handles.text_speed,'String','157'); %set speedtext
+set(handles.nav_speed,'Value',157); %set speed slider
+status = EPOCommunications('transmit', 'M157');
 %11
 
 
@@ -180,7 +180,7 @@ logdata('speed: 142',handles);%updating log
 global speed; speed=142; %set speed
 set(handles.text_speed,'String','142'); %set speedtext
 set(handles.nav_speed,'Value',142); %set speed slider
-%status = EPOCommunications('transmit', 'M142');
+status = EPOCommunications('transmit', 'M142');
 %12
 
 % --- Executes on button press in links.
@@ -193,7 +193,7 @@ logdata('direction: 200',handles);%updating log
 global direction; direction=200; %set direction
 set(handles.text_dir,'String','200'); %set direction text
 set(handles.nav_dir,'Value',101); %set direction slider
-%status = EPOCommunications('transmit', 'D200'); % D200 moet nog aangepast worden
+status = EPOCommunications('transmit', 'D200'); % D200 moet nog aangepast worden
 
 % --- Executes on button press in rechts.
 function rechts_Callback(hObject, eventdata, handles)
@@ -205,7 +205,7 @@ logdata('direction: 100',handles);%updating log
 global direction; direction=100; %set direction
 set(handles.text_dir,'String','100'); %set direction text
 set(handles.nav_dir,'Value',199); %set (negative) direction slider
-%status = EPOCommunications('transmit', 'D100'); % D100 moet nog aangepast worden
+status = EPOCommunications('transmit', 'D100'); % D100 moet nog aangepast worden
 
 
 % --- Executes on button press in straight.
@@ -218,7 +218,7 @@ logdata('direction: 150',handles);%updating log
 global direction; direction=150; %set direction
 set(handles.text_dir,'String','150'); %set direction text
 set(handles.nav_dir,'Value',150); %set (negative) direction slider
-%status = EPOCommunications('transmit', 'D150');
+status = EPOCommunications('transmit', 'D150');
 
 
 % --- Executes on button press in com_upd.
@@ -232,6 +232,7 @@ data = get(handles.com_out,'String')
 comport = strcat('\\.\COM',data);
 EPOCommunications('close'); %close any unwanted open connections
 result = EPOCommunications('open',comport); %open the wanted connection
+timecall(hObject, eventdata, handles);
 logdata('---------',handles);%updating log
 logdata('opened connection',handles);%updating log
 
@@ -271,7 +272,6 @@ function voor_KeyPressFcn(hObject, eventdata, handles)
 %	Modifier: name(s) of the modifier key(s) (i.e., control, shift) pressed
 % handles    structure with handles and user data (see GUIDATA)
 % 
-
 
 % --- Executes during object creation, after setting all properties.
 function nav_dir_CreateFcn(hObject, eventdata, handles)
@@ -334,6 +334,16 @@ else %alle andere toetsen
     stop_Callback(hObject, eventdata, handles);
 end
 
+function timecall(hObject, eventdata, handles)
+t = timer;
+t.StartDelay = .2;
+t.TimerFcn = {@startstatus,handles};
+t.ExecutionMode='fixedRate';
+t.period=.2;
+start(t);
+
+function startstatus(hObject,eventdata,handles)
+EPOfunctions.status(hObject, eventdata, handles);
 
 % --- Executes on selection change in list_log.
 function list_log_Callback(hObject, eventdata, handles)
