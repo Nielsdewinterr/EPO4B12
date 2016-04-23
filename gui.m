@@ -22,7 +22,7 @@ function varargout = gui(varargin)
 
 % Edit the above text to modify the response to help gui
 
-% Last Modified by GUIDE v2.5 19-Apr-2016 18:17:44
+% Last Modified by GUIDE v2.5 23-Apr-2016 15:07:18
 
 % Begin initialization code - DO NOT EDIT
 gui_Singleton = 1;
@@ -58,12 +58,18 @@ handles.output = hObject;
 % Update handles structure
 guidata(hObject, handles);
 
-% create speed and angle
+% initialize globals
 global speed; speed = 150;
 global last_speed;last_speed = 150;
-global direction; speed = 150;
+global direction; direction = 150;
 global last_direction; last_direction = 150;
 global log;log='';
+global distance; distance = [];
+global voltage; voltage = [];
+global motor; motor = [];
+global dir; dir = [];
+global record; record = 0;
+global choice; choice = 'None';
 
 % UIWAIT makes gui wait for user response (see UIRESUME)
 % uiwait(handles.figure1);
@@ -90,7 +96,7 @@ global speed; speed=150; %set speed
 global last_speed; last_speed=150; %reset last speed
 set(handles.text_speed,'String',150); %set speed text
 set(handles.nav_speed,'Value',150); %set speed slider
-status = EPOCommunications('transmit', 'M150');
+%status = EPOCommunications('transmit', 'M150');
 
 % --- Executes on speed slider movement.
 function nav_speed_Callback(hObject, eventdata, handles)
@@ -102,9 +108,9 @@ function nav_speed_Callback(hObject, eventdata, handles)
 
 global speed;
 speed = get(hObject,'Value');
-logdata(strcat('speed: ',speed),handles);%updating log
+logdata(horzcat('speed: ',num2str(speed)),handles);%updating log
 set(handles.text_speed,'String',speed); %set speed text
-status = EPOCommunications('transmit', strcat('D',speed)); 
+%status = EPOCommunications('transmit', strcat('D',speed)); 
 
 % --- Executes on direction slider movement.
 function nav_dir_Callback(hObject, eventdata, handles)
@@ -116,9 +122,9 @@ function nav_dir_Callback(hObject, eventdata, handles)
 
 global direction;
 direction = 300-get(hObject,'Value');%300-value because of slider orientation
-logdata(strcat('direction: ',direction),handles);%updating log
+logdata(horzcat('direction: ',num2str(direction)),handles);%updating log
 set(handles.text_dir,'String',direction); %set direction text
-status = EPOCommunications('transmit', strcat('D',direction));
+%status = EPOCommunications('transmit', strcat('D',direction));
 
 
 % --- Executes during object creation, after setting all properties.
@@ -165,9 +171,7 @@ logdata('speed: 157',handles);%updating log
 global speed; speed=157; %set speed
 set(handles.text_speed,'String','157'); %set speedtext
 set(handles.nav_speed,'Value',157); %set speed slider
-status = EPOCommunications('transmit', 'M157');
-%11
-
+%status = EPOCommunications('transmit', 'M157');
 
 
 % --- Executes on button press in achter.
@@ -180,8 +184,7 @@ logdata('speed: 142',handles);%updating log
 global speed; speed=142; %set speed
 set(handles.text_speed,'String','142'); %set speedtext
 set(handles.nav_speed,'Value',142); %set speed slider
-status = EPOCommunications('transmit', 'M142');
-%12
+%status = EPOCommunications('transmit', 'M142');
 
 % --- Executes on button press in links.
 function links_Callback(hObject, eventdata, handles)
@@ -193,7 +196,7 @@ logdata('direction: 200',handles);%updating log
 global direction; direction=200; %set direction
 set(handles.text_dir,'String','200'); %set direction text
 set(handles.nav_dir,'Value',101); %set direction slider
-status = EPOCommunications('transmit', 'D200'); % D200 moet nog aangepast worden
+%status = EPOCommunications('transmit', 'D200'); % D200 moet nog aangepast worden
 
 % --- Executes on button press in rechts.
 function rechts_Callback(hObject, eventdata, handles)
@@ -205,7 +208,7 @@ logdata('direction: 100',handles);%updating log
 global direction; direction=100; %set direction
 set(handles.text_dir,'String','100'); %set direction text
 set(handles.nav_dir,'Value',199); %set (negative) direction slider
-status = EPOCommunications('transmit', 'D100'); % D100 moet nog aangepast worden
+%status = EPOCommunications('transmit', 'D100'); % D100 moet nog aangepast worden
 
 
 % --- Executes on button press in straight.
@@ -218,7 +221,7 @@ logdata('direction: 150',handles);%updating log
 global direction; direction=150; %set direction
 set(handles.text_dir,'String','150'); %set direction text
 set(handles.nav_dir,'Value',150); %set (negative) direction slider
-status = EPOCommunications('transmit', 'D150');
+%status = EPOCommunications('transmit', 'D150');
 
 
 % --- Executes on button press in com_upd.
@@ -231,7 +234,7 @@ global result;
 data = get(handles.com_out,'String')
 comport = strcat('\\.\COM',data);
 EPOCommunications('close'); %close any unwanted open connections
-result = EPOCommunications('open',comport); %open the wanted connection
+%result = EPOCommunications('open',comport); %open the wanted connection
 timecall(hObject, eventdata, handles);
 logdata('---------',handles);%updating log
 logdata('opened connection',handles);%updating log
@@ -334,26 +337,67 @@ else %alle andere toetsen
     stop_Callback(hObject, eventdata, handles);
 end
 
-function timecall(hObject, eventdata, handles)
-t = timer;
-t.StartDelay = .2;
-t.TimerFcn = {@startstatus,handles};
-t.ExecutionMode='fixedRate';
-t.period=.2;
-start(t);
+%graphical interface for recording and displaying data
+    function timecall(hObject, eventdata, handles)
+    t = timer;
+    t.StartDelay = .5;
+    t.TimerFcn = {@startstatus,handles};
+    t.ExecutionMode='fixedRate';
+    t.period=.5;
+    start(t);
 
-function startstatus(hObject,eventdata,handles)
-EPOfunctions.status(hObject, eventdata, handles);
-
-% --- Executes on selection change in list_log.
-function list_log_Callback(hObject, eventdata, handles)
-% hObject    handle to list_log (see GCBO)
-% eventdata  reserved - to be defined in a future version of MATLAB
-% handles    structure with handles and user data (see GUIDATA)
-
-% Hints: contents = cellstr(get(hObject,'String')) returns list_log contents as cell array
-%        contents{get(hObject,'Value')} returns selected item from list_log
-
+    function startstatus(hObject,eventdata,handles)
+    global distance; %global matrix with recorded distance (r and l)
+    global voltage;
+    global motor;
+    global dir;
+    global record; %whether the wants to record the data
+    global choice; %which record the user wants to display
+        %Get Status
+        status = EPOfunctions.status(hObject, eventdata, handles);%[Dir,Mot,distL,distR, vBatt]
+        %Get Distance
+        distance_new = str2double([status(3);status(4)]);
+        if isempty(distance)
+          distance=distance_new;
+        else
+          distance=[distance, distance_new];
+        end
+        %TODO Get Voltage
+        voltage_new = str2double(status(5));
+        if isempty(voltage)
+          voltage=voltage_new;
+        else
+          voltage=[voltage, voltage_new];
+        end
+        %TODO Get Speed
+        motor_new = str2double(status(5));
+        if isempty(motor)
+          motor=motor_new;
+        else
+          motor=[motor, motor_new];
+        end
+        %TODO Get Direction
+        dir_new = str2double(status(5));
+        if isempty(dir)
+          dir=dir_new;
+        else
+          dir=[dir, dir_new];
+        end
+    %dispay in graph
+    if record==1 %user clicked record
+        axes(handles.Graph);
+        switch choice
+            case 'Distance'
+                plot(handles.Graph,(distance)');
+            case 'Voltage'
+                plot(handles.Graph,(voltage)');
+            case 'Motor'
+                plot(handles.Graph,(motor)');
+            case 'Direction'
+                plot(handles.Graph,(dir)');
+            otherwise
+        end
+    end
 
 % --- Executes during object creation, after setting all properties.
 function list_log_CreateFcn(hObject, eventdata, handles)
@@ -366,3 +410,73 @@ function list_log_CreateFcn(hObject, eventdata, handles)
 if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
     set(hObject,'BackgroundColor','white');
 end
+
+% --- Executes during object creation, after setting all properties.
+function edit5_CreateFcn(hObject, eventdata, handles)
+% hObject    handle to edit5 (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    empty - handles not created until after all CreateFcns called
+
+% Hint: edit controls usually have a white background on Windows.
+%       See ISPC and COMPUTER.
+if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
+    set(hObject,'BackgroundColor','white');
+end
+
+% --- Executes on selection change in popupmenu2.
+function popupmenu2_Callback(hObject, eventdata, handles)
+% hObject    handle to popupmenu2 (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+% Hints: contents = cellstr(get(hObject,'String')) returns popupmenu2 contents as cell array
+%        contents{get(hObject,'Value')} returns selected item from popupmenu2
+global choice;
+contents = cellstr(get(hObject,'String'));
+choice = contents{get(hObject,'Value')};
+logdata(horzcat('Display: ',choice),handles);%updating log
+cla(handles.Graph);
+
+
+% --- Executes during object creation, after setting all properties.
+function popupmenu2_CreateFcn(hObject, eventdata, handles)
+% hObject    handle to popupmenu2 (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    empty - handles not created until after all CreateFcns called
+
+% Hint: popupmenu controls usually have a white background on Windows.
+%       See ISPC and COMPUTER.
+if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
+    set(hObject,'BackgroundColor','white');
+end
+
+
+% --- Executes on button press in RecordBtn.
+function RecordBtn_Callback(hObject, eventdata, handles)
+% hObject    handle to RecordBtn (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+global record;
+record = 1;
+logdata('started record',handles);%updating log
+
+
+% --- Executes on button press in StopRecordBtn.
+function StopRecordBtn_Callback(hObject, eventdata, handles)
+% hObject    handle to StopRecordBtn (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+global record;
+record = 0;
+logdata('stopped record',handles);%updating log
+
+
+% --- Executes on button press in ClearRecordBtn.
+function ClearRecordBtn_Callback(hObject, eventdata, handles)
+% hObject    handle to ClearRecordBtn (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+global distance; distance = [];
+global voltage; voltage = [];
+global motor; motor = [];
+global dir; dir = [];

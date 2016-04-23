@@ -5,13 +5,14 @@ methods(Static)
     
     function status = status(hObject, eventdata, handles)
         
-        stat = EPOCommunications('transmit','S');
-        %stat = '************************** * Audio Beacon: on * c: 0x00000000 * f_c: xxxxx * f_b: xxxxx * c_r: xxx ************************** * PWM: * Dir. xxx * Mot. xxx ************************** * Sensors: * Dist. L xxx R xxx * V_batt xx.x V ********************';
+        %stat = EPOCommunications('transmit','S');
+        stat = horzcat('************************** * Audio Beacon: on * c: 0x00000000 * f_c: xxxxx * f_b: xxxxx * c_r: xxx ************************** * PWM: * Dir. 150 * Mot. 150 ************************** * Sensors: * Dist. L ',num2str((200-100).*rand(1)),' R ',num2str((200-100).*rand(1)),' * V_batt 90 V ********************');
+        %stat = strcat('************************** * Audio Beacon: on * c: 0x00000000 * f_c: xxxxx * f_b: xxxxx * c_r: xxx ************************** * PWM: * Dir. xxx * Mot. xxx ************************** * Sensors: * Dist. L xxx R xxx * V_batt xx.x V ********************');
         getdata = strread(stat,'%s');
         l=length(getdata);
         i=1;
         while(i<l)
-            switch char(getdata(i))
+            switch char(getdata(i));
                 case 'Beacon:'
                     audioBeacon = getdata(find(strcmp('Beacon:',getdata))+1);
                     set(handles.audioBeacon,'String',audioBeacon);
@@ -52,6 +53,8 @@ methods(Static)
             end
             i=i+1;
         end
+            status = [Dir,Mot,distL,distR, vBatt];   
+            
     end
     
 end
