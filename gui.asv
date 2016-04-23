@@ -401,6 +401,7 @@ end
         %dispay in graph
         switch choice
             case 'Distance'
+                set(xlabel)
                 plot(handles.Graph,time,(distance)');
             case 'Voltage'
                 plot(handles.Graph,time,(voltage)');
