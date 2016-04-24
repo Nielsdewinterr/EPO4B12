@@ -22,7 +22,7 @@ function varargout = gui(varargin)
 
 % Edit the above text to modify the response to help gui
 
-% Last Modified by GUIDE v2.5 23-Apr-2016 19:07:44
+% Last Modified by GUIDE v2.5 24-Apr-2016 10:54:39
 
 % Begin initialization code - DO NOT EDIT
 gui_Singleton = 1;
@@ -227,13 +227,16 @@ set(handles.nav_dir,'Value',150); %set (negative) direction slider
 
 % --- Executes on button press in com_upd.
 function com_upd_Callback(hObject, eventdata, handles)
+global edit; %whether the edit box is being used
 global comport;
 global result;
 % hObject    handle to com_upd (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
-data = get(handles.com_out,'String')
+edit=0;
+data = get(handles.com_out,'String');
 comport = strcat('\\.\COM',data);
+figure(handles.figure1);
 EPOCommunications('close'); %close any unwanted open connections
 %result = EPOCommunications('open',comport); %open the wanted connection
 timecall(hObject, eventdata, handles);
@@ -258,6 +261,8 @@ function com_out_Callback(hObject, eventdata, handles)
 % handles    structure with handles and user data (see GUIDATA)
 % Hints: get(hObject,'String') returns contents of com_out as text
 %        str2double(get(hObject,'String')) returns contents of com_out as a double
+global edit; %whether the edittext is being used
+edit = 1;
 
 
 % --- Executes during object creation, after setting all properties.
@@ -318,29 +323,6 @@ log=sprintf('%s\n%s',log,logcode);
 set(handles.list_log,'String',log);
 currentItems =size(get(handles.list_log,'String'));
 set(handles.list_log,'Value',currentItems(1));
-
-% --- Executes on key press with focus on figure1 and none of its controls.
-function figure1_KeyPressFcn(hObject, eventdata, handles)
-% hObject    handle to figure1 (see GCBO)
-% eventdata  structure with the following fields (see MATLAB.UI.FIGURE)
-%	Key: name of the key that was pressed, in lower case
-%	Character: character interpretation of the key(s) that was pressed
-%	Modifier: name(s) of the modifier key(s) (i.e., control, shift) pressed
-% handles    structure with handles and user data (see GUIDATA)
-key = get(handles.figure1, 'CurrentCharacter');
-if key==119 || key==87 %w
-    voor_Callback(hObject, eventdata, handles);
-elseif key==115 || key==83 %s
-    achter_Callback(hObject, eventdata, handles);
-elseif key == 97 || key==65  %a
-    links_Callback(hObject, eventdata, handles);
-elseif key == 100 || key==68 %d
-    rechts_Callback(hObject, eventdata, handles);
-elseif key == 108 || key==76 %l
-    EPOfunctions.status(hObject, eventdata, handles);
-else %alle andere toetsen
-    stop_Callback(hObject, eventdata, handles);
-end
 
 %graphical interface for recording and displaying data
     function timecall(hObject, eventdata, handles)
@@ -523,3 +505,49 @@ global voltage;assignin('base','voltage',voltage);
 global motor;assignin('base','motor',motor);
 global dir;assignin('base','direction',dir);
 global time;assignin('base','time',time);
+
+
+% --- Executes on key press with focus on figure1 or any of its controls.
+function figure1_WindowKeyPressFcn(hObject, eventdata, handles)
+% hObject    handle to figure1 (see GCBO)
+% eventdata  structure with the following fields (see MATLAB.UI.FIGURE)
+%	Key: name of the key that was pressed, in lower case
+%	Character: character interpretation of the key(s) that was pressed
+%	Modifier: name(s) of the modifier key(s) (i.e., control, shift) pressed
+% handles    structure with handles and user data (see GUIDATA)
+global edit;
+if edit==0
+    key = get(handles.figure1, 'CurrentCharacter');
+    if key==119 || key==87 %w
+        voor_Callback(hObject, eventdata, handles);
+    elseif key==115 || key==83 %s
+        achter_Callback(hObject, eventdata, handles);
+    elseif key==97 || key==65  %a
+        links_Callback(hObject, eventdata, handles);
+    elseif key==100 || key==68 %d
+        rechts_Callback(hObject, eventdata, handles);
+    elseif key==108 || key==76 %l
+        EPOfunctions.status(hObject, eventdata, handles);
+    elseif key==120 || key==88 %x
+        straight_Callback(hObject, eventdata, handles);
+    elseif key==113 || key==81 %q
+        links_Callback(hObject, eventdata, handles);
+        voor_Callback(hObject, eventdata, handles);
+    elseif key==101 || key==69 %e
+        rechts_Callback(hObject, eventdata, handles);
+        voor_Callback(hObject, eventdata, handles);
+    else %alle andere toetsen
+        stop_Callback(hObject, eventdata, handles);
+    end
+end
+
+% --- Executes on key press with focus on com_out and none of its controls.
+function com_out_KeyPressFcn(hObject, eventdata, handles)
+% hObject    handle to com_out (see GCBO)
+% eventdata  structure with the following fields (see MATLAB.UI.CONTROL.UICONTROL)
+%	Key: name of the key that was pressed, in lower case
+%	Character: character interpretation of the key(s) that was pressed
+%	Modifier: name(s) of the modifier key(s) (i.e., control, shift) pressed
+% handles    structure with handles and user data (see GUIDATA)
+global edit;
+edit=1;
