@@ -22,7 +22,7 @@ function varargout = gui(varargin)
 
 % Edit the above text to modify the response to help gui
 
-% Last Modified by GUIDE v2.5 24-Apr-2016 10:54:39
+% Last Modified by GUIDE v2.5 26-Apr-2016 12:22:53
 
 % Begin initialization code - DO NOT EDIT
 gui_Singleton = 1;
@@ -71,6 +71,8 @@ global dir; dir = [];
 global time; time= [];
 global record; record = 0;
 global choice; choice = 'None';
+global midterm; midterm = 0;
+global stopdistance; stopdistance =0;
 
 % UIWAIT makes gui wait for user response (see UIRESUME)
 % uiwait(handles.figure1);
@@ -238,7 +240,7 @@ data = get(handles.com_out,'String');
 comport = strcat('\\.\COM',data);
 figure(handles.figure1);
 EPOCommunications('close'); %close any unwanted open connections
-%result = EPOCommunications('open',comport); %open the wanted connection
+result = EPOCommunications('open',comport); %open the wanted connection
 timecall(hObject, eventdata, handles);
 logdata('---------',handles);%updating log
 logdata('opened connection',handles);%updating log
@@ -331,7 +333,7 @@ set(handles.list_log,'Value',currentItems(1));
     t.StartDelay = .5;
     t.TimerFcn = {@startstatus,handles};
     t.ExecutionMode='fixedRate';
-    t.period=.5;
+    t.period=.2;
     start(t);
 
     function startstatus(hObject,eventdata,handles)
@@ -345,9 +347,17 @@ set(handles.list_log,'Value',currentItems(1));
         global dir;
         global time;
         global choice; %which record the user wants to display
+        global midterm; global stopdistance;
         axes(handles.Graph);
             %Get Distance
             distance_new = str2double([status(3);status(4)]);
+            if midterm==1
+                if (str2num(status(4)))<str2num(stopdistance)
+                    EPOCommunications('transmit','M135');
+                    pause(0.4);
+                    EPOCommunications('transmit','M150');
+                end
+            end
             if isempty(distance)
               distance=distance_new;
             else
@@ -551,3 +561,49 @@ function com_out_KeyPressFcn(hObject, eventdata, handles)
 % handles    structure with handles and user data (see GUIDATA)
 global edit;
 edit=1;
+
+
+% --- Executes on button press in Midterm.
+function Midterm_Callback(hObject, eventdata, handles)
+% hObject    handle to Midterm (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+global midterm;
+global stopdistance;
+midterm = 1;
+stopdistance = get(handles.MidtermEdit,'String')
+
+
+
+% --- Executes during object creation, after setting all properties.
+function MidtermEdit_CreateFcn(hObject, eventdata, handles)
+% hObject    handle to MidtermEdit (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    empty - handles not created until after all CreateFcns called
+
+% Hint: edit controls usually have a white background on Windows.
+%       See ISPC and COMPUTER.
+if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
+    set(hObject,'BackgroundColor','white');
+end
+
+
+% --- Executes on key press with focus on MidtermEdit and none of its controls.
+function MidtermEdit_KeyPressFcn(hObject, eventdata, handles)
+% hObject    handle to MidtermEdit (see GCBO)
+% eventdata  structure with the following fields (see MATLAB.UI.CONTROL.UICONTROL)
+%	Key: name of the key that was pressed, in lower case
+%	Character: character interpretation of the key(s) that was pressed
+%	Modifier: name(s) of the modifier key(s) (i.e., control, shift) pressed
+% handles    structure with handles and user data (see GUIDATA)
+global edit;
+edit=1;
+
+
+function MidtermEdit_Callback(hObject, eventdata, handles)
+% hObject    handle to MidtermEdit (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+% Hints: get(hObject,'String') returns contents of MidtermEdit as text
+%        str2double(get(hObject,'String')) returns contents of MidtermEdit as a double
