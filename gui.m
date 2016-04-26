@@ -97,7 +97,7 @@ global speed; speed=150; %set speed
 global last_speed; last_speed=150; %reset last speed
 set(handles.text_speed,'String',150); %set speed text
 set(handles.nav_speed,'Value',150); %set speed slider
-%status = EPOCommunications('transmit', 'M150');
+status = EPOCommunications('transmit', 'M150');
 
 % --- Executes on speed slider movement.
 function nav_speed_Callback(hObject, eventdata, handles)
@@ -111,7 +111,7 @@ global speed;
 speed = get(hObject,'Value');
 logdata(horzcat('speed: ',num2str(speed)),handles);%updating log
 set(handles.text_speed,'String',speed); %set speed text
-%status = EPOCommunications('transmit', strcat('D',speed)); 
+status = EPOCommunications('transmit', strcat('D',speed)); 
 
 % --- Executes on direction slider movement.
 function nav_dir_Callback(hObject, eventdata, handles)
@@ -125,7 +125,7 @@ global direction;
 direction = 300-get(hObject,'Value');%300-value because of slider orientation
 logdata(horzcat('direction: ',num2str(direction)),handles);%updating log
 set(handles.text_dir,'String',direction); %set direction text
-%status = EPOCommunications('transmit', strcat('D',direction));
+status = EPOCommunications('transmit', strcat('D',direction));
 
 
 % --- Executes during object creation, after setting all properties.
@@ -172,7 +172,7 @@ logdata('speed: 157',handles);%updating log
 global speed; speed=157; %set speed
 set(handles.text_speed,'String','157'); %set speedtext
 set(handles.nav_speed,'Value',157); %set speed slider
-%status = EPOCommunications('transmit', 'M157');
+status = EPOCommunications('transmit', 'M157');
 
 
 % --- Executes on button press in achter.
@@ -185,7 +185,7 @@ logdata('speed: 142',handles);%updating log
 global speed; speed=142; %set speed
 set(handles.text_speed,'String','142'); %set speedtext
 set(handles.nav_speed,'Value',142); %set speed slider
-%status = EPOCommunications('transmit', 'M142');
+status = EPOCommunications('transmit', 'M142');
 
 % --- Executes on button press in links.
 function links_Callback(hObject, eventdata, handles)
@@ -197,7 +197,7 @@ logdata('direction: 200',handles);%updating log
 global direction; direction=200; %set direction
 set(handles.text_dir,'String','200'); %set direction text
 set(handles.nav_dir,'Value',101); %set direction slider
-%status = EPOCommunications('transmit', 'D200'); % D200 moet nog aangepast worden
+status = EPOCommunications('transmit', 'D200'); % D200 moet nog aangepast worden
 
 % --- Executes on button press in rechts.
 function rechts_Callback(hObject, eventdata, handles)
@@ -209,7 +209,7 @@ logdata('direction: 100',handles);%updating log
 global direction; direction=100; %set direction
 set(handles.text_dir,'String','100'); %set direction text
 set(handles.nav_dir,'Value',199); %set (negative) direction slider
-%status = EPOCommunications('transmit', 'D100'); % D100 moet nog aangepast worden
+status = EPOCommunications('transmit', 'D100'); % D100 moet nog aangepast worden
 
 
 % --- Executes on button press in straight.
@@ -222,7 +222,7 @@ logdata('direction: 150',handles);%updating log
 global direction; direction=150; %set direction
 set(handles.text_dir,'String','150'); %set direction text
 set(handles.nav_dir,'Value',150); %set (negative) direction slider
-%status = EPOCommunications('transmit', 'D150');
+status = EPOCommunications('transmit', 'D150');
 
 
 % --- Executes on button press in com_upd.
