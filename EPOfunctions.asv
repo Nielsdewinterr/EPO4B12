@@ -5,7 +5,7 @@ methods(Static)
     
     function status = status(hObject, eventdata, handles)
         global fakedist;
-        if fakedist<10
+        if fakedist)
           fakedist=300;
         else
           fakedist=fakedist-10;

@@ -73,6 +73,7 @@ global record; record = 0;
 global choice; choice = 'None';
 global midterm; midterm = 0;
 global stopdistance; stopdistance =0;
+global fakedist; fakedist=300;
 
 % UIWAIT makes gui wait for user response (see UIRESUME)
 % uiwait(handles.figure1);
@@ -99,7 +100,7 @@ global speed; speed=150; %set speed
 global last_speed; last_speed=150; %reset last speed
 set(handles.text_speed,'String',150); %set speed text
 set(handles.nav_speed,'Value',150); %set speed slider
-status = EPOCommunications('transmit', 'M150');
+%status = EPOCommunications('transmit', 'M150');
 
 % --- Executes on speed slider movement.
 function nav_speed_Callback(hObject, eventdata, handles)
@@ -347,15 +348,17 @@ set(handles.list_log,'Value',currentItems(1));
         global dir;
         global time;
         global choice; %which record the user wants to display
-        global midterm; global stopdistance;
+        global midterm; 
+        global stopdistance;
         axes(handles.Graph);
             %Get Distance
             distance_new = str2double([status(3);status(4)]);
             if midterm==1
-                if (str2num(status(4)))<str2num(stopdistance)
-                    EPOCommunications('transmit','M135');
+                if (str2double(status(4)))<str2num(stopdistance)
+                    %EPOCommunications('transmit','M135');
+                    disp('low')
                     pause(0.4);
-                    EPOCommunications('transmit','M150');
+                    %EPOCommunications('transmit','M150');
                 end
             end
             if isempty(distance)
@@ -596,8 +599,9 @@ function MidtermEdit_KeyPressFcn(hObject, eventdata, handles)
 %	Character: character interpretation of the key(s) that was pressed
 %	Modifier: name(s) of the modifier key(s) (i.e., control, shift) pressed
 % handles    structure with handles and user data (see GUIDATA)
-global edit;
+global edit;%whether the edittext is being used
 edit=1;
+
 
 
 function MidtermEdit_Callback(hObject, eventdata, handles)
@@ -607,3 +611,5 @@ function MidtermEdit_Callback(hObject, eventdata, handles)
 
 % Hints: get(hObject,'String') returns contents of MidtermEdit as text
 %        str2double(get(hObject,'String')) returns contents of MidtermEdit as a double
+global edit; %whether the edittext is being used
+edit = 1;
