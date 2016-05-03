@@ -175,8 +175,8 @@ logdata('speed: 157',handles);%updating log
 global speed; speed=160; %set speed
 set(handles.text_speed,'String','157'); %set speedtext
 set(handles.nav_speed,'Value',157); %set speed slider
-status = EPOCommunications('transmit', 'M157');
-status = EPOCommunications('transmit', 'D152');
+status = EPOCommunications('transmit', 'M160');
+%status = EPOCommunications('transmit', 'D152');
 
 
 % --- Executes on button press in achter.
