@@ -176,6 +176,7 @@ global speed; speed=160; %set speed
 set(handles.text_speed,'String','157'); %set speedtext
 set(handles.nav_speed,'Value',157); %set speed slider
 status = EPOCommunications('transmit', 'M160');
+
 %status = EPOCommunications('transmit', 'D152');
 
 
@@ -341,8 +342,10 @@ set(handles.list_log,'Value',currentItems(1));
 
     function startstatus(hObject,eventdata,handles)
     global record; %whether the wants to record the data
-    %Get Status
+    %Get Status 
+    tic
             status = EPOfunctions.status(hObject, eventdata, handles);%[Dir,Mot,distL,distR, vBatt]
+    toc
     if record==1 %user clicked record
         global distance; %global matrix with recorded distance (r and l)
         global voltage;
@@ -355,6 +358,7 @@ set(handles.list_log,'Value',currentItems(1));
         axes(handles.Graph);
             %Get Distance
             distance_new = str2double([status(3);status(4)]);
+            
             if midterm==1
                 if (str2double(status(4)))<str2num(stopdistance)
                     EPOCommunications('transmit','M135');
@@ -362,6 +366,7 @@ set(handles.list_log,'Value',currentItems(1));
                     pause(0.25);
                     EPOCommunications('transmit','M150');
                     midterm =2
+                    
                 end
             end
             if isempty(distance)
