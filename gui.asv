@@ -341,10 +341,11 @@ set(handles.list_log,'Value',currentItems(1));
     start(t);
 
     function startstatus(hObject,eventdata,handles)
+        
     global record; %whether the wants to record the data
+    if record==1 %user clicked record
     %Get Status 
             status = EPOfunctions.status(hObject, eventdata, handles);%[Dir,Mot,distL,distR, vBatt] 
-    if record==1 %user clicked record
         global distance; %global matrix with recorded distance (r and l)
         global voltage;
         global motor;
@@ -578,16 +579,23 @@ function Midterm_Callback(hObject, eventdata, handles)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
 global midterm;
+global slow;
 global stopdistance;
 midterm = 1;
+slow =1;
 stopdistance = get(handles.MidtermEdit,'String')
 timecallMidterm(hObject, eventdata, handles);
 
 logdata('speed: 160',handles);%updating log
-global speed; speed=160; %set speed
+%global speed; speed=160; %set speed
 set(handles.text_speed,'String','160'); %set speedtext
 set(handles.nav_speed,'Value',160); %set speed slider
-status = EPOCommunications('transmit', 'M160');
+status = EPOCommunications('transmit', 'D151');
+status = EPOCommunications('transmit', 'M165');
+pause(1)
+status = EPOCommunications('transmit', 'M158');
+tic
+
 
 % --- Executes during object creation, after setting all properties.
 function MidtermEdit_CreateFcn(hObject, eventdata, handles)
@@ -636,17 +644,30 @@ edit = 1;
     start(t);
 
     function startstatusMidterm(hObject,eventdata,handles)
-    tic
+        global midterm;
+        global slow;
         %Get Status 
         status = EPOfunctions.status(hObject, eventdata, handles);%[Dir,Mot,distL,distR, vBatt]
-   
+          status(4)
         global stopdistance;
-        axes(handles.Graph);
-                if (str2double(status(4)))<str2num(stopdistance)
-                    EPOCommunications('transmit','M135');
-                    disp('low')
-                    pause(0.25);
-                    EPOCommunications('transmit','M150');     
-                end
-    toc
+        if midterm==1
+                    if (str2double(status(4)))<str2num(stopdistance)
+                        EPOCommunications('transmit','M135');                        
+                        pause(0.25);
+                        EPOCommunications('transmit','M150'); 
+                        midterm = 2;
+                        %toc
+                        global t;
+                        stop(t)
+            
+%                     elseif (str2double(status(4)))<275
+%                         if slow == 1
+%                             EPOCommunications('transmit', 'M135');
+%                             EPOCommunications('transmit', 'M157');
+%                             slow =2;
+%                         end
+                    end
+        end
+        toc
+        tic
     

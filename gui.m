@@ -583,7 +583,7 @@ global slow;
 global stopdistance;
 midterm = 1;
 slow =1;
-stopdistance = get(handles.MidtermEdit,'String')
+stopdistance = 100+string2num(get(handles.MidtermEdit,'String'))
 timecallMidterm(hObject, eventdata, handles);
 
 logdata('speed: 160',handles);%updating log
@@ -594,6 +594,7 @@ status = EPOCommunications('transmit', 'D151');
 status = EPOCommunications('transmit', 'M165');
 pause(1)
 status = EPOCommunications('transmit', 'M158');
+tic
 
 
 % --- Executes during object creation, after setting all properties.
@@ -650,7 +651,7 @@ edit = 1;
           status(4)
         global stopdistance;
         if midterm==1
-                    if (str2double(status(4)))<str2num(stopdistance)
+                    if (str2double(status(4)))<(stopdistance)
                         EPOCommunications('transmit','M135');                        
                         pause(0.25);
                         EPOCommunications('transmit','M150'); 
@@ -667,4 +668,6 @@ edit = 1;
 %                         end
                     end
         end
+        toc
+        tic
     
