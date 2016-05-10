@@ -59,6 +59,8 @@ handles.output = hObject;
 guidata(hObject, handles);
 
 % initialize globals
+handles.afgelegd = 0;
+handles.laststatus = 0;
 global speed; speed = 150;
 global last_speed;last_speed = 150;
 global direction; direction = 150;
@@ -647,24 +649,45 @@ edit = 1;
         global slow;
         %Get Status 
         status = EPOfunctions.status(hObject, eventdata, handles);%[Dir,Mot,distL,distR, vBatt]
-          status(4)
         global stopdistance;
         if midterm==1
-                    if (str2double(status(4)))<str2num(stopdistance)
-                        EPOCommunications('transmit','M135');                        
-                        pause(0.25);
-                        EPOCommunications('transmit','M150'); 
-                        midterm = 2;
-                        %toc
-                        global t;
-                        stop(t)
-            
-%                     elseif (str2double(status(4)))<275
-%                         if slow == 1
-%                             EPOCommunications('transmit', 'M135');
-%                             EPOCommunications('transmit', 'M157');
-%                             slow =2;
-%                         end
+              if (str2double(status(4)))<str2num(stopdistance)       
+                    stopMidterm(hObject,eventdata,handles);
+%               elseif (str2double(status(4)))<275
+%                   if slow == 1
+%                       EPOCommunications('transmit', 'M135');
+%                       EPOCommunications('transmit', 'M157');
+%                       slow =2;
+%                   end
+              end
+              
+              handles.status = str2double(status(4));
+              if not(handles.laststatus == 0)
+                handles.afgelegd = handles.laststatus - handles.status
+                    if (handles.status+handles.afgelegd)<stopdistance
+                        firstdistance =((handles.afgelegd)/3)+handles.status;
+                        seconddistance = 2*((handles.afgelegd)/3)+handles.status;
+                        if firstdistance<stopdistance
+                                t =timer; t.StartDelay = .05;
+                                t.timerFcn = {@stopMidterm};
+                        else
+                            if seconddistance<stopdistance
+                                t =timer; t.StartDelay = .1;
+                                t.timerFcn = {@stopMidterm};
+                            else
+                                t =timer; t.StartDelay = .15;
+                                t.timerFcn = {@stopMidterm};
+                            end
+                        end
                     end
+               end
         end
-    
+        
+        function stopMidterm(hObject,eventdata,handles)
+            EPOCommunications('transmit','M135');                        
+            pause(0.25);
+            EPOCommunications('transmit','M150'); 
+            midterm = 2;
+            %toc
+            global t;
+            stop(t)
