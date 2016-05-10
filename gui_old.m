@@ -22,7 +22,7 @@ function varargout = gui(varargin)
 
 % Edit the above text to modify the response to help gui
 
-% Last Modified by GUIDE v2.5 29-Apr-2016 09:31:09
+% Last Modified by GUIDE v2.5 10-May-2016 11:31:51
 
 % Begin initialization code - DO NOT EDIT
 gui_Singleton = 1;
@@ -59,8 +59,6 @@ handles.output = hObject;
 guidata(hObject, handles);
 
 % initialize globals
-global afgelegd; afgelegd = 0;
-global laststatus; laststatus = 0;
 global speed; speed = 150;
 global last_speed;last_speed = 150;
 global direction; direction = 150;
@@ -100,8 +98,8 @@ function stop_Callback(hObject, eventdata, handles)
 logdata('stop',handles);%updating log
 global speed; speed=150; %set speed
 global last_speed; last_speed=150; %reset last speed
-set(handles.text_speed,'String',150); %set speed text
-set(handles.nav_speed,'Value',150); %set speed slider
+%set(handles.text_speed,'String',150); %set speed text
+%set(handles.nav_speed,'Value',150); %set speed slider
 status = EPOCommunications('transmit', 'M150');
 
 % --- Executes on speed slider movement.
@@ -177,7 +175,7 @@ logdata('speed: 157',handles);%updating log
 global speed; speed=160; %set speed
 set(handles.text_speed,'String','157'); %set speedtext
 set(handles.nav_speed,'Value',157); %set speed slider
-status = EPOCommunications('transmit', 'M160');
+status = EPOCommunications('transmit', 'M150');
 
 %status = EPOCommunications('transmit', 'D152');
 
@@ -585,17 +583,20 @@ global slow;
 global stopdistance;
 midterm = 1;
 slow =1;
-stopdistance = 100+str2num(get(handles.MidtermEdit,'String'))
+stopdistance = 100+ str2num(get(handles.MidtermEdit,'String'))
 timecallMidterm(hObject, eventdata, handles);
 
 logdata('speed: 160',handles);%updating log
 %global speed; speed=160; %set speed
 set(handles.text_speed,'String','160'); %set speedtext
+set(handles.nav_speed,'Value',160); %set speed slider
 status = EPOCommunications('transmit', 'D151');
-status = EPOCommunications('transmit', 'M165');
+
+status = EPOCommunications('transmit', 'M157');
 pause(1)
-status = EPOCommunications('transmit', 'M158');
-%tic
+status = EPOCommunications('transmit', 'M151');
+
+
 
 
 % --- Executes during object creation, after setting all properties.
@@ -638,7 +639,7 @@ edit = 1;
     function timecallMidterm(hObject, eventdata, handles)
     global t;
     t = timer;
-    t.StartDelay = .5;
+    t.StartDelay = 0;
     t.TimerFcn = {@startstatusMidterm,handles};
     t.ExecutionMode='fixedRate';
     t.period=.2;
@@ -646,63 +647,24 @@ edit = 1;
 
     function startstatusMidterm(hObject,eventdata,handles)
         global midterm;
-        global slow;
         %Get Status 
+        
         status = EPOfunctions.status(hObject, eventdata, handles);%[Dir,Mot,distL,distR, vBatt]
-        status(4)
+          status(4)
+          
         global stopdistance;
-        global laststatus;
-        global afgelegd;
         if midterm==1
-              if (str2double(status(4)))<(stopdistance)       
-                    stopMidterm(hObject,eventdata,handles);
-%               elseif (str2double(status(4)))<275
-%                   if slow == 1
-%                       EPOCommunications('transmit', 'M135');
-%                       EPOCommunications('transmit', 'M157');
-%                       slow =2;
-%                   end
-              end
-%               
-%               status = str2double(status(4))
-%               if (laststatus==0)   
-%                 laststatus = status;
-%                 return;
-%               else
-%               afgelegd = laststatus - status
-%                     if (status-afgelegd)<stopdistance
-%                         firstdistance =((afgelegd)/3)-status;
-%                         seconddistance = 2*((afgelegd)/3)-status;
-%                         if firstdistance<stopdistance
-%                                 r =timer; r.StartDelay = .05;
-%                                 r.timerFcn = @stopMidterm;
-%                                 start(r);
-%                                 1
-%                         else
-%                             if seconddistance<stopdistance
-%                                 e =timer; e.StartDelay = .1;
-%                                 e.timerFcn = @stopMidterm;
-%                                 start(e);
-%                                 2
-%                             else
-%                                 w =timer; w.StartDelay = .15;
-%                                 w.timerFcn = @stopMidterm;
-%                                 start(w);
-%                                 3
-%                             end
-%                         end
-%                     end
-%               end
-%                 laststatus = status;
+                    if (str2double(status(4)))<(stopdistance)
+                        EPOCommunications('transmit','M135');                        
+                        pause(0.3);
+                        EPOCommunications('transmit','M150'); 
+                        toc
+                        midterm = 2;
+                        
+                        global t;
+                        stop(t)
+            
+                    end
         end
-        
-        function stopMidterm(hObject,eventdata,handles)
-            EPOCommunications('transmit','M135');                        
-            pause(0.3);
-            EPOCommunications('transmit','M150'); 
-            midterm = 2;
-           
-            global t;
-            stop(t)
        
-        
+    
