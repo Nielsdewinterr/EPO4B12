@@ -585,7 +585,7 @@ global slow;
 global stopdistance;
 midterm = 1;
 slow =1;
-stopdistance = get(handles.MidtermEdit,'String')
+stopdistance = 100+string2num(get(handles.MidtermEdit,'String'))
 timecallMidterm(hObject, eventdata, handles);
 
 logdata('speed: 160',handles);%updating log
@@ -596,6 +596,7 @@ status = EPOCommunications('transmit', 'D151');
 status = EPOCommunications('transmit', 'M165');
 pause(1)
 status = EPOCommunications('transmit', 'M158');
+tic
 
 
 % --- Executes during object creation, after setting all properties.
@@ -651,6 +652,7 @@ edit = 1;
         status = EPOfunctions.status(hObject, eventdata, handles);%[Dir,Mot,distL,distR, vBatt]
         global stopdistance;
         if midterm==1
+<<<<<<< HEAD
               if (str2double(status(4)))<str2num(stopdistance)       
                     stopMidterm(hObject,eventdata,handles);
 %               elseif (str2double(status(4)))<275
@@ -679,9 +681,27 @@ edit = 1;
                                 t.timerFcn = {@stopMidterm};
                             end
                         end
+=======
+                    if (str2double(status(4)))<(stopdistance)
+                        EPOCommunications('transmit','M135');                        
+                        pause(0.25);
+                        EPOCommunications('transmit','M150'); 
+                        midterm = 2;
+                        %toc
+                        global t;
+                        stop(t)
+            
+%                     elseif (str2double(status(4)))<275
+%                         if slow == 1
+%                             EPOCommunications('transmit', 'M135');
+%                             EPOCommunications('transmit', 'M157');
+%                             slow =2;
+%                         end
+>>>>>>> origin/master
                     end
                end
         end
+<<<<<<< HEAD
         
         function stopMidterm(hObject,eventdata,handles)
             EPOCommunications('transmit','M135');                        
@@ -691,3 +711,8 @@ edit = 1;
             %toc
             global t;
             stop(t)
+=======
+        toc
+        tic
+    
+>>>>>>> origin/master

@@ -596,6 +596,10 @@ status = EPOCommunications('transmit', 'D151');
 status = EPOCommunications('transmit', 'M165');
 pause(1)
 status = EPOCommunications('transmit', 'M158');
+<<<<<<< HEAD
+=======
+tic
+>>>>>>> origin/master
 
 
 % --- Executes during object creation, after setting all properties.
@@ -649,6 +653,7 @@ edit = 1;
         global slow;
         %Get Status 
         status = EPOfunctions.status(hObject, eventdata, handles);%[Dir,Mot,distL,distR, vBatt]
+<<<<<<< HEAD
         global stopdistance;
         handles.status = str2double(status(4));
         if not(handles.laststatus == 0)
@@ -690,3 +695,28 @@ edit = 1;
             %toc
             global t;
             stop(t)
+=======
+          status(4)
+        global stopdistance;
+        if midterm==1
+                    if (str2double(status(4)))<str2num(stopdistance)
+                        EPOCommunications('transmit','M135');                        
+                        pause(0.25);
+                        EPOCommunications('transmit','M150'); 
+                        midterm = 2;
+                        %toc
+                        global t;
+                        stop(t)
+            
+%                     elseif (str2double(status(4)))<275
+%                         if slow == 1
+%                             EPOCommunications('transmit', 'M135');
+%                             EPOCommunications('transmit', 'M157');
+%                             slow =2;
+%                         end
+                    end
+        end
+        toc
+        tic
+    
+>>>>>>> origin/master
