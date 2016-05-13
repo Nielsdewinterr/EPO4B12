@@ -34,5 +34,6 @@ A=[(2*transpose(x2-x1)) (-2*r12) 0 0;
     2*transpose(x4-x2) 0 0 -2*r24;
     2*transpose(x4-x3) 0 0 -2*r34;];
 Y=pinv(A)*b
-x=Y(1);
-y=Y(2);
+xreturn=Y(1);
+yreturn=Y(2);
+return [xreturn,yreturn];
