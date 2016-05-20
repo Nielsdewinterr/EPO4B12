@@ -8,17 +8,33 @@ hhat3=ch3(ref1,yest3);
 hhat4=ch3(ref1,yest4);
 hhat5=ch3(ref1,yest5);
 
-[max1 samp1]=max(hhat1);
-hhat2 = hhat2(samp1-1000:samp1+1000);
-hhat3 = hhat3(samp1-1000:samp1+1000);
-hhat4 = hhat4(samp1-1000:samp1+1000);
-hhat5 = hhat5(samp1-1000:samp1+1000);
+hhat1 = [zeros(1,2000) hhat1 zeros(1,2000)];
+hhat2 = [zeros(1,2000) hhat2 zeros(1,2000)];
+hhat3 = [zeros(1,2000) hhat3 zeros(1,2000)];
+hhat4 = [zeros(1,2000) hhat4 zeros(1,2000)];
+hhat5 = [zeros(1,2000) hhat5 zeros(1,2000)];
+[max1, samp1]=max(hhat1);
+hhat1 = hhat1(samp1-2000:samp1+2000);
+hhat2 = hhat2(samp1-2000:samp1+2000);
+hhat3 = hhat3(samp1-2000:samp1+2000);
+hhat4 = hhat4(samp1-2000:samp1+2000);
+hhat5 = hhat5(samp1-2000:samp1+2000);
+% plot(hhat1);
+% hold on;
+% plot(hhat2);
+% hold on;
+% plot(hhat3);
+% hold on;
+% plot(hhat4);
+% hold on;
+% plot(hhat5);
+% figure;
 
-
-[max2 samp2]=max(hhat2);
-[max3 samp3]=max(hhat3);
-[max4 samp4]=max(hhat4);
-[max5 samp5]=max(hhat5);
+[max1, samp1]=max(hhat1);
+[max2, samp2]=max(hhat2);
+[max3, samp3]=max(hhat3);
+[max4, samp4]=max(hhat4);
+[max5, samp5]=max(hhat5);
 
 sampdelta12=samp1-samp2;   %12
 sampdelta13=samp1-samp3;   %13
@@ -53,17 +69,5 @@ distance25=speedsound*time25;
 distance34=speedsound*time34;
 distance35=speedsound*time35;
 distance45=speedsound*time45;
-% 
-% subplot(511)
-% plot(hhat1)
-% subplot(512)
-% plot(hhat2)
-% subplot(513)
-% plot(hhat3)
-% subplot(514)
-% plot(hhat4)
-% subplot(515)
-% plot(hhat5)
-
 end
 

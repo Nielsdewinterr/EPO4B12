@@ -1,4 +1,4 @@
- function [x,y] = LIN (r12,r13,r14,r23,r24,r34)
+ function [x,y] = Lin (r12,r13,r14,r23,r24,r34)
 
 
 x1 = [0;5];
