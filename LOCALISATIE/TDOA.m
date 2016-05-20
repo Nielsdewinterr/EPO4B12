@@ -1,5 +1,5 @@
 function [distance12,distance13,distance14,distance15,distance23,distance24,distance25,distance34,distance35,distance45]=TDOA(yest1,yest2,yest3,yest4,yest5,ref1)
-speedsound=340.29;
+speedsound=340;
 Fs_RX=48000;
 
 hhat1=ch3(ref1,yest1);
@@ -8,27 +8,19 @@ hhat3=ch3(ref1,yest3);
 hhat4=ch3(ref1,yest4);
 hhat5=ch3(ref1,yest5);
 
-hhat1 = [zeros(1,2000) hhat1 zeros(1,2000)];
-hhat2 = [zeros(1,2000) hhat2 zeros(1,2000)];
-hhat3 = [zeros(1,2000) hhat3 zeros(1,2000)];
-hhat4 = [zeros(1,2000) hhat4 zeros(1,2000)];
-hhat5 = [zeros(1,2000) hhat5 zeros(1,2000)];
+add = 2000;
+hhat1 = [zeros(1,add) hhat1 zeros(1,add)];
+hhat2 = [zeros(1,add) hhat2 zeros(1,add)];
+hhat3 = [zeros(1,add) hhat3 zeros(1,add)];
+hhat4 = [zeros(1,add) hhat4 zeros(1,add)];
+hhat5 = [zeros(1,add) hhat5 zeros(1,add)];
+add1 = 1200;
 [max1, samp1]=max(hhat1);
-hhat1 = hhat1(samp1-2000:samp1+2000);
-hhat2 = hhat2(samp1-2000:samp1+2000);
-hhat3 = hhat3(samp1-2000:samp1+2000);
-hhat4 = hhat4(samp1-2000:samp1+2000);
-hhat5 = hhat5(samp1-2000:samp1+2000);
-% plot(hhat1);
-% hold on;
-% plot(hhat2);
-% hold on;
-% plot(hhat3);
-% hold on;
-% plot(hhat4);
-% hold on;
-% plot(hhat5);
-% figure;
+hhat1 = hhat1(samp1-add:samp1+add1);
+hhat2 = hhat2(samp1-add:samp1+add1);
+hhat3 = hhat3(samp1-add:samp1+add1);
+hhat4 = hhat4(samp1-add:samp1+add1);
+hhat5 = hhat5(samp1-add:samp1+add1);
 
 [max1, samp1]=max(hhat1);
 [max2, samp2]=max(hhat2);
