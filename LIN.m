@@ -4,11 +4,11 @@
 x=auto(1)
 y=auto(2)
 
-r1=sqrt(y^2+(5-x)^2)
-r2=sqrt((5-y)^2+(5-x)^2)
-r3=sqrt((5-y)^2+(x)^2)
-r4=sqrt(y^2+(x)^2)
-r5=sqrt(y^2+(2.5-x)^2)
+r1=sqrt(y^2+(5-x)^2);
+r2=sqrt((5-y)^2+(5-x)^2);
+r3=sqrt((5-y)^2+(x)^2);
+r4=sqrt(y^2+(x)^2);
+r5=sqrt(y^2+(2.5-x)^2);
 
 r12 = (r1-r2);
 r13 = (r1-r3);
@@ -27,7 +27,7 @@ x3 = [5;0];
 x4 = [0;0];
 x5 = [2.5;0];
 
-b=[(r12)^2-norm(x1)^2+norm(x2)^2;
+b=[ (r12)^2-norm(x1)^2+norm(x2)^2;
     (r13)^2-norm(x1)^2+norm(x3)^2;
     (r14)^2-norm(x1)^2+norm(x4)^2;
     (r15)^2-norm(x1)^2+norm(x5)^2;
