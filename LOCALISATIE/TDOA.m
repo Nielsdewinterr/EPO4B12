@@ -1,10 +1,10 @@
 function [distance12,distance13,distance14,distance15,distance23,distance24,distance25,distance34,distance35,distance45]=TDOA(yest1,yest2,yest3,yest4,yest5,ref1)
 speedsound=340;
 Fs_RX=48000;
-zerosaddenlinks = 7000;
-zerosaddenrechts = 7000;
-samplelinks = 1000;
-samplerechts = 1000;
+zerosaddenlinks = 2000;
+zerosaddenrechts = 2000;
+samplelinks = 2000;
+samplerechts = 1700;
 
 hhat1=ch3(ref1,yest1);
 hhat2=ch3(ref1,yest2);
