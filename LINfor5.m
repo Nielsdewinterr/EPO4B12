@@ -1,25 +1,4 @@
-% function [x,y] = LIN (r12,r13,r14,r23,r24,r34)
-% test gedeelte
-%auto=[autox;autoy];
-x=auto(1)
-y=auto(2)
-
-r1=sqrt(y^2+(5-x)^2);
-r2=sqrt((5-y)^2+(5-x)^2);
-r3=sqrt((5-y)^2+(x)^2);
-r4=sqrt(y^2+(x)^2);
-r5=sqrt(y^2+(2.5-x)^2);
-
-r12 = (r1-r2);
-r13 = (r1-r3);
-r14 = (r1-r4);
-r15 = (r1-r5);
-r23 = (r2-r3);
-r24 = (r2-r4);
-r25 = (r2-r5)
-r34 = (r3-r4);
-r35 = (r3-r5)
-r45 = (r4-r5)
+function [x,y] = LINfor5 (r12,r13,r14,r15,r23,r24,r25,r34,r35,r45)
 
 x1 = [0;5];
 x2 = [5;5];
@@ -48,5 +27,5 @@ A=[(2*transpose(x2-x1)) (-2*r12)    0       0       0;
     2*transpose(x5-x3)      0       0       0    (-2*r35);
     2*transpose(x5-x4)      0       0       0    (-2*r45);];
 Y=pinv(A)*b
-x=Y(2)
-y=Y(1)
+x=Y(2);
+y=Y(1);
