@@ -23,9 +23,10 @@ r35 = (r3-r5);
 r45 = (r4-r5);
 
 if(m==4)
-    LINfor4 (r12,r13,r14,r23,r24,r34)
+    LIN (r12,r13,r14,r23,r24,r34)
 elseif(m==5)
     LINfor5 (r12,r13,r14,r15,r23,r24,r25,r34,r35,r45)
 else
-    display('choose 4 or 5')
+    display('choose 4 or 5 microfones')
+    TESTlin
 end
