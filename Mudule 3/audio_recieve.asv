@@ -1,8 +1,0 @@
-function inputbuffer = audio_recieve
-    %inputbuffer = pa_wavrecord(channels, nsamples, [samplerate], [deviceid], ['asio']);
-    %EPOC0mmunications('transmit', 'A1');
-    inputbuffer = 3;
-    pause(2);
-    1
-    %EPOCommunications('transmit', 'A0');
-end
