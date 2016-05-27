@@ -3,8 +3,8 @@ speedsound=340;
 Fs_RX=48000;
 zerosaddenlinks = 1000;
 zerosaddenrechts = 1000;
-samplelinks = 1000;
-samplerechts = 1000;
+samplelinks = 800;
+samplerechts = 800;
 
 hhat1=ch3(ref1,yest1);
 hhat2=ch3(ref1,yest2);
@@ -18,6 +18,8 @@ hhat3 = [zeros(1,zerosaddenlinks) hhat3 zeros(1,zerosaddenrechts)];
 hhat4 = [zeros(1,zerosaddenlinks) hhat4 zeros(1,zerosaddenrechts)];
 hhat5 = [zeros(1,zerosaddenlinks) hhat5 zeros(1,zerosaddenrechts)];
 
+
+
 [max1, samp1]=max(hhat1);
 hhat1 = hhat1(samp1-samplelinks:samp1+samplerechts);
 hhat2 = hhat2(samp1-samplelinks:samp1+samplerechts);
@@ -30,6 +32,14 @@ hhat5 = hhat5(samp1-samplelinks:samp1+samplerechts);
 [max3, samp3]=max(abs(hhat3));
 [max4, samp4]=max(abs(hhat4));
 [max5, samp5]=max(abs(hhat5));
+% plot(hhat1)
+% hold on;
+% plot(hhat2)
+% hold on;
+% plot(hhat3)
+% hold on;
+% plot(hhat4)
+% hold on;
 
 sampdelta12=samp1-samp2;   %12
 sampdelta13=samp1-samp3;   %13
