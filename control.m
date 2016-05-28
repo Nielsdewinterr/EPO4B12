@@ -21,7 +21,7 @@ C=[x,y];
 %to get Middle point of circle, first determine whether it is to the left
 %or to the right of the car. lr is forwarded to the main function, -1
 %meaning left, 1 meaning right. if lr is 0, the car must drive straight(forward);
-place = ((D(2)-C(2))/tand(rot))+(C(1)-D(1))
+place = ((D(2)-C(2))/tand(rot))+(C(1)-D(1));
 if place > 0        %turn left
     lr=-1;
     Mx=x+R*cosd(90+rot);
@@ -36,7 +36,7 @@ else                %straight ahead
     lr = 0;
     orientation=rot;
     turntime=0;
-    straighttime = (pdist([C(1),C(2);D(1),D(2)],'euclidean'))/speed;
+    straighttime = abs((pdist([C(1),C(2);D(1),D(2)],'euclidean'))/speed);
 
     %plot all
     scatter(C(1),C(2))
@@ -77,14 +77,14 @@ LengthMC=norm(VectorMC,2);
 if lr==1
     VectorMT2=[(M(1)-T2(1)),(M(2)-T2(2))];
     LengthMT2=norm(VectorMT2,2);
-    AngleCT2 = -acosd(dot(VectorMC,VectorMT2)/(LengthMC*LengthMT2))
-    turntime = (2*pi*AngleCT2/180)*R/speed;
+    AngleCT2 = -acosd(dot(VectorMC,VectorMT2)/(LengthMC*LengthMT2));
+    turntime = abs((2*pi*AngleCT2/180)*R/speed);
     orientation = rot+AngleCT2;
 else
     VectorMT1=[(M(1)-T1(1)),(M(2)-T1(2))];
     LengthMT1=norm(VectorMT1,2);
-    AngleCT1 = acosd(dot(VectorMC,VectorMT1)/(LengthMC*LengthMT1))
-    turntime = (2*pi*AngleCT1/180)*R/speed;
+    AngleCT1 = acosd(dot(VectorMC,VectorMT1)/(LengthMC*LengthMT1));
+    turntime = abs((2*pi*AngleCT1/180)*R/speed);
     orientation = rot+AngleCT1;
 end
 
