@@ -5,23 +5,28 @@ function [turntime,orientation,lr,straighttime]=control(x,y,rot,xdest,ydest)
 %vector containing the time the car must turn (turntime), the orientation
 %the car has after the turn (orientation), whether the car must turn left
 %or right(lr) and how long the car should travel straight on.
-%The variables used inside this function are:
+%The variables used frequently inside this function are:
 
 %R: radius circle
 %C: center of car
 %Mx,My: center of circle
 %D: destination point
 %T: Target point on circle
-close all;
+clf;
 tic;
 speed=1.2;
 R=0.5;
 D=[xdest,ydest];
 C=[x,y];
+
 %to get Middle point of circle, first determine whether it is to the left
 %or to the right of the car. lr is forwarded to the main function, -1
 %meaning left, 1 meaning right. if lr is 0, the car must drive straight(forward);
-place = ((D(2)-C(2))/tand(rot))+(C(1)-D(1));
+if (sind(rot)<0)
+    place = -(((D(2)-C(2))/tand(rot))+(C(1)-D(1)));
+else
+    place = ((D(2)-C(2))/tand(rot))+(C(1)-D(1));
+end
 if place > 0        %turn left
     lr=-1;
     Mx=x+R*cosd(90+rot);
@@ -33,6 +38,7 @@ elseif place <0     %turn right
     My=y-R*sind(90+rot);
     M=[Mx,My];
 else                %straight ahead
+    
     lr = 0;
     orientation=rot;
     turntime=0;
