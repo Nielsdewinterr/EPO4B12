@@ -76,16 +76,7 @@ else
     %To calculate the angles on the circle we use the dot-product rules
     VectorMC=[(M(1)-C(1)),(M(2)-C(2))];
     LengthMC=norm(VectorMC,2);
-    if place == 0
-        if lr ==1
-            rel = -1;
-        else 
-            rel = 1;
-        end
-    else
-        rel = lr;
-    end
-    if lr==1 
+    if xor(lr==1,place==0)
         VectorMT2=[(M(1)-T2(1)),(M(2)-T2(2))];
         LengthMT2=norm(VectorMT2,2);
         AngleCT2 = -acosd(dot(VectorMC,VectorMT2)/(LengthMC*LengthMT2));
@@ -98,7 +89,6 @@ else
         turntime = abs((2*pi*AngleCT1/180)*R/speed);
         orientation = rot+AngleCT1;
     end
-
 
     toc;
     %plot circle
