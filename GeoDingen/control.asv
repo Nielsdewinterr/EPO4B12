@@ -22,11 +22,11 @@ C=[x,y];
 %or to the right of the car. lr is forwarded to the main function, -1
 %meaning left, 1 meaning right. if lr is 0, the car must drive straight(forward);
 if (sind(rot)<0)
-    place = round(-(((D(2)-C(2))/tand(rot))+(C(1)-D(1))),1);
+    place = round(-(((D(2)-C(2))/tand(rot))+(C(1)-D(1))),2);
 else
-    place = round(((D(2)-C(2))/tand(rot))+(C(1)-D(1)),1);
+    place = round(((D(2)-C(2))/tand(rot))+(C(1)-D(1)),2);
 end
-if place == 0 && ((xor(D(2)<C(2),sin(rot)>0))||(xor(C(2)<D(2),sin(rot)>0)))           %straight ahead
+if place == 0 && not(xor((D(2)-C(2))>0,sin(rot)>0))           %straight ahead
     lr = 0;
     orientation=rot;
     turntime=0;
@@ -63,39 +63,32 @@ else
     straighttime=distDT/speed;
     %calculate DX
     angleMD=atan2d((D(1)-M(1)),(D(2)-M(2)));
-   
+    DX1=[-distDT*sind(-rotMDX+angleMD),-distDT*cosd(-rotMDX+angleMD)];
+    DX2=[-distDT*sind(rotMDX+angleMD),-distDT*cosd(rotMDX+angleMD)];
+    T1 = D + DX1;
+    T2 = D + DX2;
 
-    %Now we nearly have the points on the circle, but instead of two points we need to
+    %Now we have the points on the circle, but instead of two points we need to
     %choose the one closest to the front of the car. A bonus development may be riding
     %backward if the second value is close behind the car.
 
     %To calculate the angles on the circle we use the dot-product rules
     VectorMC=[(M(1)-C(1)),(M(2)-C(2))];
     LengthMC=norm(VectorMC,2);
-    if xor(lr==1,place==1)
-        DX2=[-distDT*sind(rotMDX+angleMD),-distDT*cosd(rotMDX+angleMD)];
-        T2 = D + DX2;
-        VectorMT2=[(M(1)-T2(1)),(M(2)-T2(2))];
-        LengthMT2=norm(VectorMT2,2);
-        if place == 0  %handle backwards driving
-            AngleCT2 = -acosd(-dot(VectorMC,VectorMT2)/(LengthMC*LengthMT2));
-        else
-            AngleCT2 = -acosd(dot(VectorMC,VectorMT2)/(LengthMC*LengthMT2));
-        end
-        turntime = abs((2*pi*AngleCT2/180)*R/speed);
-        orientation = rot+AngleCT2;
-    else
-        DX1=[-distDT*sind(-rotMDX+angleMD),-distDT*cosd(-rotMDX+angleMD)];
-        T1 = D + DX1;
+    if xor(lr==1,place==0)
         VectorMT1=[(M(1)-T1(1)),(M(2)-T1(2))];
         LengthMT1=norm(VectorMT1,2);
-        if place == 0  %handle backwards driving
-            AngleCT1 = acosd(-dot(VectorMC,VectorMT1)/(LengthMC*LengthMT1));
-        else
-            AngleCT1 = acosd(dot(VectorMC,VectorMT1)/(LengthMC*LengthMT1));
-        end
-        turntime = abs((2*pi*AngleCT1/180)*R/speed);
+        if place == 0
+            AngleCT1 = acosd(dot(VectorMC,VectorMT1)/(LengthMC*LengthMT1))
+        
+            turntime = abs((2*pi*AngleCT1/180)*R/speed);
         orientation = rot+AngleCT1;
+    else
+        VectorMT2=[(M(1)-T2(1)),(M(2)-T2(2))];
+        LengthMT2=norm(VectorMT2,2);
+        AngleCT2 = -acosd(dot(VectorMC,VectorMT2)/(LengthMC*LengthMT2))
+        turntime = abs((2*pi*AngleCT2/180)*R/speed);
+        orientation = rot+AngleCT2;
     end
 
     toc;
@@ -114,22 +107,22 @@ else
     scatter(C(1),C(2))
     text(C(1)+0.15,C(2),'Car');
     hold on;
-    if xor(lr==1,place==1)
-        scatter(T2(1),T2(2))
-        text(T2(1)+0.15,T2(2),'Target2');
-        hold on;
-        %plot next heading
-        timen=-1:1:5;
-        yn=(tand(orientation))*(timen-T2(1))+T2(2);
-        plot(timen,yn,':');
-        hold on;
-    else
+    if xor(lr==1,place==0)
         scatter(T1(1),T1(2))
         text(T1(1)+0.15,T1(2),'Target1');
         hold on;
         %plot next heading
         timen=-1:1:5;
         yn=(tand(orientation))*(timen-T1(1))+T1(2);
+        plot(timen,yn,':');
+        hold on;
+    else
+        scatter(T2(1),T2(2))
+        text(T2(1)+0.15,T2(2),'Target2');
+        hold on;
+        %plot next heading
+        timen=-1:1:5;
+        yn=(tand(orientation))*(timen-T2(1))+T2(2);
         plot(timen,yn,':');
         hold on;
     end
