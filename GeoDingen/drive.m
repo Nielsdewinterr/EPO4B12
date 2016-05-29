@@ -11,6 +11,7 @@ pause(turntime)
 end
 
  EPOCommunications('transmit', 'D150');
+ EPOCommunications('transmit', 'M157');
  pause(straighttime)
  EPOCommunications('transmit', 'M150');    
 
