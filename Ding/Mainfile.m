@@ -1,7 +1,7 @@
 clear all;
 close all;
 
-load LocatieB.mat;
+load LocatieD.mat;
 load reference_signal.mat;
 
 a=inputbuffer(:,1);
