@@ -18,14 +18,14 @@ for a = 1:1:turns
 %         EPOCommunications('transmit', 'D100');
 %         EPOCommunications('transmit', 'M157');
         pause(turntime)
-        x = x + R*cosd(rot+90)+R*cosd(rot-90+((turntime*speedcirkel*360*2)/(2*pi)))
-        y = y + R*sind(rot+90)+R*sind(rot-90+((turntime*speedcirkel*360*2)/(2*pi)))
+        x = x + R*cosd(rot+90)+R*cosd(rot-90+((turntime*speedcirkel*360)/(2*pi)))
+        y = y + R*sind(rot+90)+R*sind(rot-90+((turntime*speedcirkel*360)/(2*pi)))
     elseif lr == 1 %turn right
 %         EPOCommunications('transmit', 'D200');
 %         EPOCommunications('transmit', 'M157');  
         pause(turntime)
-        x = x + R*cosd(rot-90)+R*cosd(rot+90-((turntime*speedcirkel*360*2)/(2*pi)))
-        y = y + R*sind(rot-90)+R*sind(rot+90-((turntime*speedcirkel*360*2)/(2*pi)))
+        x = x + R*cosd(rot-90)+R*cosd(rot+90-((turntime*speedcirkel*360)/(2*pi*R)))
+        y = y + R*sind(rot-90)+R*sind(rot+90-((turntime*speedcirkel*360)/(2*pi*R)))
     else %no turn
     end   
 %     EPOCommunications('transmit', 'D150');
