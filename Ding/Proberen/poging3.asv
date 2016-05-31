@@ -27,7 +27,8 @@ plot(C)
 lagDiff = lag(I);
 time = lagDiff/Fs;
 poging3 = time*speedsound;
-
+plot(C)
+figure
 
 
 end

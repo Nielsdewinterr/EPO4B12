@@ -5,11 +5,12 @@ L = Ny - Nx + 1;
 
 Y = fft(y);
 X = fft([x zeros(1,Ny - Nx)]); % zero padding to length Ny
-Hhat = Y./X; % frequency domain deconvolution
-tresh=0.01*max(abs(X));%treshold
+tresh=0.1*max(abs(Y));%treshold
+ii = find(abs(Y)<tresh);
+
+
 %making a vector G that has length N(=length(X)=Length(Y))
 %with value 1 where X>tresh
-ii = find(abs(X)<tresh);
-Hhat(ii)=0;
+Hhat(ii)=0;Hhat = X./Y; % frequency domain deconvolution
 hhat=ifft(Hhat);
 end
