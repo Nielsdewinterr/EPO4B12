@@ -1,13 +1,10 @@
 clear all;
 close all;
-prompt='Start';
+prompt='Connect gedraaid? -> zo niet nu doen!';
 input(prompt);
-EPOCommunications('close');
-result = EPOCommunications('open','\\.\COM3');
-EPOCommunications('transmit','D180');
 init;
 
-prompt='Next';
+prompt='Start meting audio -> verander zo de waarde van ref1 naar ref .. en naar b';
 input(prompt);
 inputbuffer =  audio_recieve;
 a=inputbuffer(:,1);
