@@ -1,7 +1,7 @@
-clear all
-prompt='Connect Gedraaid? -> zo niet doe dat nu!!';
-input(prompt);
 
+prompt='Connect Gedraaid/Vorige waarde opgeslagen? -> zo niet doe dat nu!!';
+input(prompt);
+clear all;
 init;
 
 load reference_signal.mat;
