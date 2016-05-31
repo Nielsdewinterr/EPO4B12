@@ -21,12 +21,21 @@ C=[x,y];
 %to get Middle point of circle, first determine whether it is to the left
 %or to the right of the car. lr is forwarded to the main function, -1
 %meaning left, 1 meaning right. if lr is 0, the car must drive straight(forward);
-if (sind(rot)<0)
-    place = round(-(((D(2)-C(2))/tand(rot))+(C(1)-D(1))),1);
+C(2)
+D(2)
+if (sind(rot)==0) && (round(C(2)-D(2),1)==0)
+    place=0;
 else
-    place = round(((D(2)-C(2))/tand(rot))+(C(1)-D(1)),1);
+    if (sind(rot)<0)
+        place = round(-(((D(2)-C(2))/tand(rot))+(C(1)-D(1))),1);
+    else
+        place = round(((D(2)-C(2))/tand(rot))+(C(1)-D(1)),1);
+    end
 end
-if place == 0 && ((xor(D(2)<C(2),sin(rot)>0))||(xor(C(2)<D(2),sin(rot)>0)))           %straight ahead
+place
+D(2)>C(2)
+sind(rot)<=0
+if (place == 0 || isnan(place)) && (xor(D(2)>C(2),sind(rot)<=0))          %straight ahead
     lr = 0;
     orientation=rot;
     turntime=0;
@@ -72,15 +81,15 @@ else
     %To calculate the angles on the circle we use the dot-product rules
     VectorMC=[(M(1)-C(1)),(M(2)-C(2))];
     LengthMC=norm(VectorMC,2);
-    if xor(lr==1,place==1)
+    if lr==1
         DX2=[-distDT*sind(rotMDX+angleMD),-distDT*cosd(rotMDX+angleMD)];
         T2 = D + DX2;
         VectorMT2=[(M(1)-T2(1)),(M(2)-T2(2))];
         LengthMT2=norm(VectorMT2,2);
-        if place == 0  %handle backwards driving
-            AngleCT2 = -acosd(-dot(VectorMC,VectorMT2)/(LengthMC*LengthMT2));
+        if place == 0 || isnan(place) %handle backwards driving
+            AngleCT2 = real(acosd(dot(VectorMC,VectorMT2)/(LengthMC*LengthMT2)))
         else
-            AngleCT2 = -acosd(dot(VectorMC,VectorMT2)/(LengthMC*LengthMT2));
+            AngleCT2 = -real(acosd(dot(VectorMC,VectorMT2)/(LengthMC*LengthMT2)))
         end
         turntime = abs((2*pi*AngleCT2/180)*R/speed);
         orientation = rot+AngleCT2;
@@ -89,10 +98,10 @@ else
         T1 = D + DX1;
         VectorMT1=[(M(1)-T1(1)),(M(2)-T1(2))];
         LengthMT1=norm(VectorMT1,2);
-        if place == 0  %handle backwards driving
-            AngleCT1 = acosd(-dot(VectorMC,VectorMT1)/(LengthMC*LengthMT1));
+        if place == 0 || isnan(place) %handle backwards driving
+            AngleCT1 = real(-acosd(dot(VectorMC,VectorMT1)/(LengthMC*LengthMT1)))
         else
-            AngleCT1 = acosd(dot(VectorMC,VectorMT1)/(LengthMC*LengthMT1));
+            AngleCT1 = real(acosd(dot(VectorMC,VectorMT1)/(LengthMC*LengthMT1)))
         end
         turntime = abs((2*pi*AngleCT1/180)*R/speed);
         orientation = rot+AngleCT1;
@@ -114,7 +123,7 @@ else
     scatter(C(1),C(2))
     text(C(1)+0.15,C(2),'Car');
     hold on;
-    if xor(lr==1,place==1)
+    if lr==1
         scatter(T2(1),T2(2))
         text(T2(1)+0.15,T2(2),'Target2');
         hold on;

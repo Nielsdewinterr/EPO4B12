@@ -2,7 +2,7 @@ function [x,y,orientation] = testControlDrive(x,y,rot,xdest,ydest)
 speed=1.2;
 R=0.5;
 
-[turntime,orientation,lr,straighttime] = control(x,y,rot,xdest,ydest);
+[turntime,orientation,lr,straighttime] = control(x,y,rot,xdest,ydest)
 
 if rem(straighttime,1)>0.3
     turns = fix(straighttime/1);
@@ -35,7 +35,8 @@ for a = 1:1:turns
 %     EPOCommunications('transmit', 'M150'); 
     %check again
     %here comes the TDOA TEST
-    [turntime,orientation,lr,straighttime] = control(x,y,orientation,xdest,ydest);
+    input('continue?')
+    [turntime,orientation,lr,straighttime] = control(x,y,orientation,xdest,ydest)
 end
 %turn and drive
 if lr == -1 %turn left
