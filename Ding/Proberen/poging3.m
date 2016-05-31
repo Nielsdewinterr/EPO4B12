@@ -2,31 +2,25 @@ function poging3 = poging3(s1, s2, ref)
 
 speedsound=340;
 Fs=48000;
-zerosaddenlinks = 1000;
-zerosaddenrechts = 1000;
-samplelinks = 866;
-samplerechts = 866;
 
-% s1 = ch3(ref, s1);
-% s2 = ch3(ref, s2);
-% s1 = [zeros(1,zerosaddenlinks) s1 zeros(1,zerosaddenrechts)];
-% s2 = [zeros(1,zerosaddenlinks) s2 zeros(1,zerosaddenrechts)];
 
-% [~,sampref]=max(abs(s1));
-% s1 = s1(sampref-samplelinks:sampref+samplerechts);
-% s2 = s2(sampref-samplelinks:sampref+samplerechts);
-% subplot(311)
-% plot(ref)
-% subplot(312)
-% plot(s1)
-% subplot(313)
-% plot(s2)
-[C lag]=xcorr(ref,s1);
+[C]=conv(ref,s1);
+[C2]=conv(ref,s2);
 plot(C)
-[~,I] = max(abs(C));
-lagDiff = lag(I);
-time = lagDiff/Fs;
-poging3 = time*speedsound;
+hold on 
+plot(C2)
+[~,I1] = max(abs(C));
+[~,I2] = max(abs(C2));
+I=I2-I1;
+plot(C)
+figure
+% lagDiff = lag(I);
+% lagDiff2 = lag(I2)
+time3 = I/Fs;
+% time = lagDiff/Fs;
+% time2 = lagDiff2/Fs;
+% time=time-time2;
+poging3 = time3*speedsound;
 
 
 
