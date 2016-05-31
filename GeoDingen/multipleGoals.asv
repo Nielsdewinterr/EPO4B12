@@ -1,6 +1,0 @@
-function multipleGoals(x,y,rot,A)
-
-length(A)
-for i=1:A
-    [x,y] = testControlDrive(x,y,rot,xdest,ydest);
-end
