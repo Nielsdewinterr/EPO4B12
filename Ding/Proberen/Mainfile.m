@@ -1,6 +1,6 @@
 clear all
 close all
-load E.mat;
+load b.mat;
 load Reference_signal_3.mat;
 
 
@@ -10,18 +10,16 @@ c=inputbuffer(:,3);
 d=inputbuffer(:,4);
 e=inputbuffer(:,5);
 
-r12 = poging3(a',b',ref1', ref2');
-r13 = poging3(a',c',ref1', ref2');
-r14 = poging3(a',d',ref1', ref4');
-r23 = poging3(b',c',ref2', ref3');
-r24 = poging3(b',d',ref2', ref4');
-r34 = poging3(c',d',ref3', ref4');
+r12 = poging3(a',b',ref3', ref3');
+r13 = poging3(a',c',ref3', ref3');
+r14 = poging3(a',d',ref3', ref3');
+r23 = poging3(b',c',ref3', ref3');
+r24 = poging3(b',d',ref3', ref3');
+r34 = poging3(c',d',ref3', ref3');
 
 [x,y] = LIN(r12,r13,r14,r23,r24,r34);
-
-
-
 plot(y,x,'x')
+
 drawnow
 xlim([0,4.53]);
 ylim([0,4.14]);
@@ -35,6 +33,4 @@ text(1.45, 3.44,'C');
 text(2.55,3.14,'D');
 text(3.78, 0.70,'E');
 text(1.81, 0.56,'F');
-
-hold on;
  
