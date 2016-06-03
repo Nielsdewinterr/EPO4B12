@@ -18,6 +18,10 @@ A=[(2*transpose(x2-x1)) (-2*r12) 0 0;
     2*transpose(x3-x2) 0 -2*r23 0;
     2*transpose(x4-x2) 0 0 -2*r24;
     2*transpose(x4-x3) 0 0 -2*r34;];
-Y=pinv(A)*b
+Y=pinv(A)*b;
+if(Y(2) > 5 || Y(1) > 5 || Y(2) < 0 || Y(1) < 0)
+    Y(2) = nan;
+    Y(1) = nan;
+end
 x=Y(2);
 y=Y(1);
