@@ -83,22 +83,22 @@ else
     %detect going out of field
     
     back=[0 0 0 0];
-    if (M(1)<(0-R*cos(rot))||M(1)>(fieldx-R)||M(2)<(0+R)||M(2)>(fieldy-R))
-        if M(1)<(0-R*cos(rot))
-            %circle crosses field line on the left
-            back(1)=-(R-M(1))/cos(rot);
+    stat1=(M(1)<(0+R))&&(xor(sind(rot)<0,(D(2)-M(2))<0));
+    stat2=(M(1)>(fieldx-R))&&(xor(sind(rot)>0,(D(2)-M(2))>0));
+    stat3=(M(2)<(0+R))&&(xor(cosd(rot)>0,(D(1)-M(1))<0));
+    stat4=(M(2)>(fieldy-R))&&(xor(cosd(rot)<0,(D(1)-M(1)<0)));
+    if stat1||stat2||stat3||stat4
+        if stat1==1     %circle crosses field line on the left
+            back(1)=-(R-M(1))/cos(rot)
         end
-        if M(1)>(fieldx-R)
-            %circle crosses field line on the right
-            back(2)=(R-(fieldx-M(1)))/cos(rot);
+        if stat2==1     %circle crosses field line on the right
+            back(2)=(R-(fieldx-M(1)))/cos(rot)
         end
-        if M(2)<(0+R)
-            %circle crosses bottom field line
-            back(3)=(R-M(2))/sin(rot);
+        if stat3==1     %circle crosses bottom field line
+            back(3)=-(R-M(2))/sin(rot)
         end
-        if M(2)>(fieldy-R)
-            %circle crosses top field line
-            back(4)=(R-(fieldy-M(2)))/sin(rot);
+        if stat4==1     %circle crosses top field line
+            back(4)=(R-(fieldy-M(2)))/sin(rot)
         end
         turntime=0;
         orientation=rot;
@@ -132,30 +132,31 @@ else
             %detect 180+ turn
             if sind(rot)==0 
                 place = M(1)-T2(1)
+            elseif sind(rot+90)==0
+                place = T2(1)-M(1)
             else
-                if (sind(rot)<0) 
-                    place = round((((T2(2)-(2*M(2)-C(2)))/tand(rot+90))+((2*M(1)-C(1))-T2(1))),1)
-                    3
-
+                if (sind(rot)*cosd(rot)>=0) 
+                    place = round(((T2(2)-(2*M(2)-C(2)))/tand(rot+90))+((2*M(1)-C(1))-T2(1)),1)
+                    1
                     timea=-1:1:5;
                     ya=(tand(rot+90))*(timea-(2*M(1)-C(1)))+(2*M(2)-C(2));
                     plot(timea,ya,':');
                     hold on;
                 else
                     place = round(-((T2(2)-(2*M(2)-C(2)))/tand(rot+90))+((2*M(1)-C(1))-T2(1)),1)
-                    4
+                    2
                     timea=-1:1:5;
                     ya=(tand(rot+90))*(timea-(2*M(1)-C(1)))+(2*M(2)-C(2));
                     plot(timea,ya,':');
                     hold on;
                 end
             end
-            if  place > 0 %handle 180+ degree turning
-                AngleCT2 = -real(acosd(dot(VectorMC,VectorMT2)/(LengthMC*LengthMT2)))
-                5
+            if  xor(place > 0, sind(rot)<0) %handle 180+ degree turning
+                AngleCT2 = real(-acosd(dot(VectorMC,VectorMT2)/(LengthMC*LengthMT2)))
+                3
             else
-                AngleCT2 = real(acosd(dot(VectorMC,VectorMT2)/(LengthMC*LengthMT2)))
-                6
+                AngleCT2 = -real(acosd(dot(VectorMC,VectorMT2)/(LengthMC*LengthMT2)))
+                4
             end
             turntime = (2*pi*AngleCT2/360)*R/speedcirkel;
             orientation = rot+AngleCT2;
@@ -167,30 +168,31 @@ else
             %detect 180+ turn
             if sind(rot)==0 
                 place = M(1)-T1(1)
+            elseif sind(rot+90)==0
+                place = T1(1)-M(1)
             else
-                if (sind(rot)<0) 
+                if (sind(rot)*cos(rot)<0) 
                     place = round((((T1(2)-(2*M(2)-C(2)))/tand(rot+90))+((2*M(1)-C(1))-T1(1))),1)
-                    3
-
+                    5
                     timea=-1:1:5;
                     ya=(tand(rot+90))*(timea-(2*M(1)-C(1)))+(2*M(2)-C(2));
                     plot(timea,ya,':');
                     hold on;
                 else
                     place = round(-((T1(2)-(2*M(2)-C(2)))/tand(rot+90))+((2*M(1)-C(1))-T1(1)),1)
-                    4
+                    6
                     timea=-1:1:5;
                     ya=(tand(rot+90))*(timea-(2*M(1)-C(1)))+(2*M(2)-C(2));
                     plot(timea,ya,':');
                     hold on;
                 end
             end
-            if xor(place > 0, sin(rot)<0)%handle 180+ degree turning
-                1
+            if xor(place > 0, sind(rot)>0)%handle 180+ degree turning
+                7
                 AngleCT1 = -real(-acosd(dot(VectorMC,VectorMT1)/(LengthMC*LengthMT1)))
             else
-                2
-                AngleCT1 = real(-acosd(dot(VectorMC,VectorMT1)/(LengthMC*LengthMT1)))
+                8
+                AngleCT1 = real(acosd(dot(VectorMC,VectorMT1)/(LengthMC*LengthMT1)))
             end
             turntime = (2*pi*AngleCT1/360)*R/speedcirkel;
             orientation = rot+AngleCT1;
