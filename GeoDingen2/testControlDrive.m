@@ -35,8 +35,8 @@ for a = 1:1:turns
 %         EPOCommunications('transmit', 'D200');
 %         EPOCommunications('transmit', 'M157');  
         pause(abs(turntime))
-        x = x + R*cosd(rot-90)+R*cosd(rot+90+((turntime*speedcirkel*360)/(2*pi*R)));
-        y = y + R*sind(rot-90)+R*sind(rot+90+((turntime*speedcirkel*360)/(2*pi*R)));
+        x = x + R*cosd(rot-90)+R*cosd(rot-90+((turntime*speedcirkel*360)/(2*pi*R)));
+        y = y + R*sind(rot-90)+R*sind(rot-90+((turntime*speedcirkel*360)/(2*pi*R)));
     else %no turn
     end   
 %     EPOCommunications('transmit', 'D150');

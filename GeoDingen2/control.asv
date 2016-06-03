@@ -146,7 +146,7 @@ else
                 orientation = atand((D(2)-T2(2))/(D(1)-T2(1)))+180;
             end
             AngleT2=wrapTo360(rot-orientation)
-            turntime = (2*pi*AngleT2/360)*R/speedcirkel;
+            turntime = 3;
         else %turn left
             DX1=[-distDT*sind(-rotMDX+angleMD),-distDT*cosd(-rotMDX+angleMD)];
             T1 = D + DX1;            
@@ -156,7 +156,7 @@ else
                orientation = atand((D(2)-T1(2))/(D(1)-T1(1)))+180;
             end
             AngleT1=wrapTo360(360-(rot-orientation))
-            turntime = (2*pi*AngleT1/360)*R/speedcirkel;
+            turntime = (2*pi*AngleCT2/360)*R/speedci;
         end
 
         toc;
