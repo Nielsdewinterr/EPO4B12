@@ -57,8 +57,12 @@ if (place == 0 || isnan(place)) && (xor(D(2)>C(2),sind(rot)<0))          %straig
     xlim([0 fieldx]);
     ylim([0 fieldy]);
 else
-    if place > 0        %turn right
+    if place>0
         lr=-1;
+    else
+        
+    end
+    if xor(place>0,OoFc)        %turn right
         Mx=x+R*cosd(90+rot);
         My=y+R*sind(90+rot);
         M=[Mx,My];
@@ -67,7 +71,7 @@ else
         Mx=x-R*cosd(90+rot);
         My=y-R*sind(90+rot);
         M=[Mx,My];
-    end    
+    end
     
     %calculate length Dest-Target
     lengthDM= (sqrt((M(1)-D(1))^2+(M(2)-D(2))^2));
@@ -81,24 +85,32 @@ else
     %calculate DX
     angleMD=atan2d((D(1)-M(1)),(D(2)-M(2)));
     %detect going out of field
-    
+        VectorMC=[(M(1)-C(1)),(M(2)-C(2))];
+        LengthMC=norm(VectorMC,2);
+        if lr==1 %turn right
+            DX=[-distDT*sind(rotMDX+angleMD),-distDT*cosd(rotMDX+angleMD)];
+            T = D + DX;
+        else %turn left
+            DX=[-distDT*sind(-rotMDX+angleMD),-distDT*cosd(-rotMDX+angleMD)];
+            T = D + DX;
+        end
     back=[0 0 0 0];
-    stat1=(M(1)<(0+R))&&(xor(sind(rot)<0,(D(2)-M(2))<0));
-    stat2=(M(1)>(fieldx-R))&&(xor(sind(rot)>0,(D(2)-M(2))>0));
-    stat3=(M(2)<(0+R))&&(xor(cosd(rot)>0,(D(1)-M(1))<0));
-    stat4=(M(2)>(fieldy-R))&&(xor(cosd(rot)<0,(D(1)-M(1)<0)));
-    if stat1||stat2||stat3||stat4
+    stat1=(M(1)<(0+R))&&cosd(rot)<0
+    stat2=(M(1)>(fieldx-R))&&cosd(rot)>0
+    stat3=(M(2)<(0+R))&&sind(rot)<0
+    stat4=(M(2)>(fieldy-R))&&sind(rot)>0
+    if (stat1||stat2||stat3||stat4)&&not(OoFc)
         if stat1==1     %circle crosses field line on the left
-            back(1)=-(R-M(1))/cos(rot)
+            back(1)=-(R-M(1))/cosd(rot)
         end
         if stat2==1     %circle crosses field line on the right
-            back(2)=(R-(fieldx-M(1)))/cos(rot)
+            back(2)=-(R-(fieldx-M(1)))/cosd(rot)
         end
         if stat3==1     %circle crosses bottom field line
-            back(3)=-(R-M(2))/sin(rot)
+            back(3)=-(R-M(2))/sind(rot)
         end
         if stat4==1     %circle crosses top field line
-            back(4)=(R-(fieldy-M(2)))/sin(rot)
+            back(4)=(R-(fieldy-M(2)))/sind(rot)
         end
         turntime=0;
         orientation=rot;
@@ -127,36 +139,23 @@ else
         if lr==1 %turn right
             DX2=[-distDT*sind(rotMDX+angleMD),-distDT*cosd(rotMDX+angleMD)];
             T2 = D + DX2;
-% % %             %detect rot
-% % %             if rot==180 || rot==270
-% % %                 place = M(1)-T2(1)
-% % %             elseif rot==0 || rot == 90
-% % %                 place = T2(1)-M(1)
-% % %             else
-% % %                 place = round((((T2(2)-(2*M(2)-C(2)))/tand(rot+90))+((2*M(1)-C(1))-T2(1))),1)
-% % %                 10
-% % %                 timea=-1:1:5;
-% % %                 ya=(tand(rot+90))*(timea-(2*M(1)-C(1)))+(2*M(2)-C(2));
-% % %                 plot(timea,ya,':');
-% % %                 hold on;
-% % %             end
             if T2(2)>M(2)
                 orientation = atand((D(2)-T2(2))/(D(1)-T2(1)));
             else
                 orientation = atand((D(2)-T2(2))/(D(1)-T2(1)))+180;
             end
             AngleT2=wrapTo360(rot-orientation)
-            turntime = 3;
+            turntime = (2*pi*AngleT2/360)*R/speedcirkel;
         else %turn left
             DX1=[-distDT*sind(-rotMDX+angleMD),-distDT*cosd(-rotMDX+angleMD)];
             T1 = D + DX1;            
             if T1(2)<M(2)
-                orientation = atand((D(2)-T1(2))/(D(1)-T1(1)));
+                orientation = atand((D(2)-T1(2))/(D(1)-T1(1)))
             else
-               orientation = atand((D(2)-T1(2))/(D(1)-T1(1)))+180;
+                orientation = atand((D(2)-T1(2))/(D(1)-T1(1)))+180
             end
             AngleT1=wrapTo360(360-(rot-orientation))
-            turntime = (2*pi*AngleCT2/360)*R/speedci;
+            turntime = (2*pi*AngleT1/360)*R/speedcirkel;
         end
 
         toc;
