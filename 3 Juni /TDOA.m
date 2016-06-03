@@ -1,4 +1,11 @@
-function [r12,r13,r14,r23,r24,r34] =TDOA(yest1,yest2,yest3,yest4,ref1)
+function [r12,r13,r14,r23,r24,r34] =TDOA()
+inputbuffer =  audio_recieve;
+
+yest1=inputbuffer(:,1);
+yest2=inputbuffer(:,2);
+yest3=inputbuffer(:,3);
+yest4=inputbuffer(:,4);
+yest5=inputbuffer(:,5);
 
 speedsound=340.29;
 Fs=48000;

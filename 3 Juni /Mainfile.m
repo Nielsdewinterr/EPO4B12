@@ -5,17 +5,12 @@ clear all;
 prompt='Start?';
 input(prompt);
 
-inputbuffer =  audio_recieve;
 
-a=inputbuffer(:,1);
-b=inputbuffer(:,2);
-c=inputbuffer(:,3);
-d=inputbuffer(:,4);
-e=inputbuffer(:,5);
 
-[r12,r13,r14,r23,r24,r34] = TDOA(a,b,c,d,e);
+[r12,r13,r14,r23,r24,r34] = TDOA();
 
 [x,y] = LIN(r12,r13,r14,r23,r24,r34);
+
 
 plot(y,x,'x')
 drawnow
