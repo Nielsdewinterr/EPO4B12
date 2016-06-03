@@ -1,6 +1,6 @@
 clear all
 close all
-load b.mat;
+load c.mat;
 load Reference_signal_3.mat;
 
 
