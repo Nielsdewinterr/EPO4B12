@@ -37,3 +37,5 @@ time = I/Fs;
 poging3 = time*speedsound;
 
 end
+
+find(A<max(abs(a,1,'first')
