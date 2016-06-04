@@ -83,12 +83,16 @@ plot(t,x)
 plot(t,xt)
     
     
- straightdist=1
- turndist=1
+ straightdist=;
+ turndist=1;
  
   
  
+[mins ts]=min(abs(x-straightdist));
+straighttime=ts/1000
 
+[mint tt]=min(abs(xt-turndist));
+turntime=tt/1000;
 
 
 
