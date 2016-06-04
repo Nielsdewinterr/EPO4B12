@@ -1,4 +1,5 @@
 
+
 % count=1
 % real3=2.03
 % real5=4.03
@@ -17,7 +18,7 @@
 %     v =a-exp(-b*(t+0.15));
 % acount(count)=a;
 % bcount(count)=b;
-%     x=v.*t;
+%     x=(a*t+1/b*exp(-b*(t+c)))-exp(-b*c)/b;
 %     
 %     x3(count)=x(3000);
 %     x5(count)=x(5000);
@@ -41,21 +42,56 @@
 % a=acount(samp)
 % b=bcount(samp)
 
-figure(1)
-hold on
-a=0.52
 
+
+close all;
+%astraight=0.88
+%bstraight=0.51
 
 t=[0:0.001:10];
 
-c=log(a)/-b
-v=a-exp(-b*(t+c))
+%straight constants
+
+a=1.03;
+b=0.91;
+c=log(a)/-b;
+
+%turn constants
+at=0.5;
+bt=0.91;
+ct=log(at)/-b;
+
+
+%straight speed/distance
+v=a-exp(-b*(t+c));
+x=(a*t+1/b*exp(-b*(t+c)))-exp(-b*c)/b;
+
+%turn speed/distance
+vt=at-exp(-bt*(t+ct));
+xt=(at*t+1/bt*exp(-bt*(t+ct)))-exp(-bt*c)/bt;
+
+
+
 plot(t,v)
+hold on
+plot(t,vt)
+
+
 figure(2)
-plot(t,v.*t)
+hold on
+plot(t,x)
+plot(t,xt)
     
     
-    
+ straightdist=1
+ turndist=1
+ 
+  
+ 
 
 
 
+
+% a=sqrt((x-xr)^2+(y+yr)^2)
+% 
+% y=
