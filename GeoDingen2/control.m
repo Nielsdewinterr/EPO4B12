@@ -94,22 +94,22 @@ else
             T = D + DX;
         end
     back=[0 0 0 0];
-    stat1=(M(1)<(0+R))&&cosd(rot)<0
-    stat2=(M(1)>(fieldx-R))&&cosd(rot)>0
-    stat3=(M(2)<(0+R))&&sind(rot)<0
-    stat4=(M(2)>(fieldy-R))&&sind(rot)>0
+    stat1=(M(1)<(0+R))&&cosd(rot)<0;
+    stat2=(M(1)>(fieldx-R))&&cosd(rot)>0;
+    stat3=(M(2)<(0+R))&&sind(rot)<0;
+    stat4=(M(2)>(fieldy-R))&&sind(rot)>0;
     if (stat1||stat2||stat3||stat4)&&not(OoFc)
         if stat1==1     %circle crosses field line on the left
-            back(1)=-(R-M(1))/cosd(rot)
+            back(1)=-(R-M(1))/cosd(rot);
         end
         if stat2==1     %circle crosses field line on the right
-            back(2)=-(R-(fieldx-M(1)))/cosd(rot)
+            back(2)=-(R-(fieldx-M(1)))/cosd(rot);
         end
         if stat3==1     %circle crosses bottom field line
-            back(3)=-(R-M(2))/sind(rot)
+            back(3)=-(R-M(2))/sind(rot);
         end
         if stat4==1     %circle crosses top field line
-            back(4)=(R-(fieldy-M(2)))/sind(rot)
+            back(4)=(R-(fieldy-M(2)))/sind(rot);
         end
         turntime=0;
         orientation=rot;
@@ -143,17 +143,17 @@ else
             else
                 orientation = atand((D(2)-T2(2))/(D(1)-T2(1)))+180;
             end
-            AngleT2=wrapTo360(rot-orientation)
+            AngleT2=wrapTo360(rot-orientation);
             turntime = (2*pi*AngleT2/360)*R/speedcirkel;
         else %turn left
             DX1=[-distDT*sind(-rotMDX+angleMD),-distDT*cosd(-rotMDX+angleMD)];
             T1 = D + DX1;            
             if T1(2)<M(2)
-                orientation = atand((D(2)-T1(2))/(D(1)-T1(1)))
+                orientation = atand((D(2)-T1(2))/(D(1)-T1(1)));
             else
-                orientation = atand((D(2)-T1(2))/(D(1)-T1(1)))+180
+                orientation = atand((D(2)-T1(2))/(D(1)-T1(1)))+180;
             end
-            AngleT1=wrapTo360(360-(rot-orientation))
+            AngleT1=wrapTo360(360-(rot-orientation));
             turntime = (2*pi*AngleT1/360)*R/speedcirkel;
         end
 
