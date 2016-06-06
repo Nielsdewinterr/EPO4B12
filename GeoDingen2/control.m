@@ -1,12 +1,11 @@
-function [turntime,orientation,lr,straighttime,OoF]=control(x,y,rot,xdest,ydest,OoFc)
+function [turntime,orientation,lr,straighttime,OoF]=control(x,y,rot,xdest,ydest)
 %this function assembles the car coordinates (x,y), the destination
 %coordinates(xdest,ydest) and the rotation of the car(rot - in degrees).
 %Its output is either 0, which means the car must sally straight on, or a
 %vector containing the time the car must turn (turntime), the orientation
 %the car has after the turn (orientation), whether the car must turn left
 %or right(lr) and how long the car should travel straight on. Furthermore,
-%it calculates if the path is out of field and calculates how close he is
-%(OoFd)
+%it calculates if the path is out of field(OoF)
 %The variables used frequently inside this function are:
 
 %R: radius circle
@@ -14,7 +13,6 @@ function [turntime,orientation,lr,straighttime,OoF]=control(x,y,rot,xdest,ydest,
 %Mx,My: center of circle
 %D: destination point
 %T: Target point on circle
-tic;
 fieldx=4.53;
 fieldy=4.14;
 speedcirkel=0.74;%origional:0.52
@@ -46,8 +44,8 @@ if (place == 0 || isnan(place)) && (xor(D(2)>C(2),sind(rot)<0))          %straig
     orientation=rot;
     turntime=0;
     OoF=0;
-    straighttime = abs((sqrt((C(1)-D(1))^2+(C(2)-D(2))^2))/speedrecht);
-
+    straightdist = abs((sqrt((C(1)-D(1))^2+(C(2)-D(2))^2)));
+    [~,straighttime]=dist2sec(straightdist,0,0);
     %plot all
     scatter(C(1),C(2))
     text(C(1)+0.15,C(2),'Car');
@@ -80,7 +78,7 @@ else
     distDT= sqrt(lengthDM^2-R^2);
     %this distance DT will also be needed to calculate how long the car has to 
     %travel straight.
-    straighttime=distDT/speedrecht;
+    [straighttime,~]=dist2sec(distDT,0,0);
     %calculate DX
     angleMD=atan2d((D(1)-M(1)),(D(2)-M(2)));
     %detect going out of field
@@ -98,7 +96,7 @@ else
     stat2=(M(1)>(fieldx-R))&&cosd(rot)>0;
     stat3=(M(2)<(0+R))&&sind(rot)<0;
     stat4=(M(2)>(fieldy-R))&&sind(rot)>0;
-    if (stat1||stat2||stat3||stat4)&&not(OoFc)
+    if (stat1||stat2||stat3||stat4)
         if stat1==1     %circle crosses field line on the left
             back(1)=-(R-M(1))/cosd(rot);
         end
@@ -115,8 +113,9 @@ else
         orientation=rot;
         lr=0;
         OoF=1;
-        straighttime=(max(back))/speedback;
-        
+        straightdist=(max(back));
+        [straighttime,~]=dist2sec(straightdist,0,1);
+
         %plot all
         scatter(C(1),C(2))
         text(C(1)+0.15,C(2),'Car');
@@ -144,7 +143,8 @@ else
                 orientation = atand((D(2)-T2(2))/(D(1)-T2(1)))+180;
             end
             AngleT2=wrapTo360(rot-orientation);
-            turntime = (2*pi*AngleT2/360)*R/speedcirkel;
+            turndist = (2*pi*AngleT2/360)*R;
+            [~,turntime]=dist2sec(0,turndist,0);
         else %turn left
             DX1=[-distDT*sind(-rotMDX+angleMD),-distDT*cosd(-rotMDX+angleMD)];
             T1 = D + DX1;            
@@ -154,10 +154,9 @@ else
                 orientation = atand((D(2)-T1(2))/(D(1)-T1(1)))+180;
             end
             AngleT1=wrapTo360(360-(rot-orientation));
-            turntime = (2*pi*AngleT1/360)*R/speedcirkel;
+            turndist = (2*pi*AngleT1/360)*R;
+            [~,turntime]=dist2sec(0,turndist,0);
         end
-
-        toc;
 
         %plot circle
         ang=0:0.01:2*pi; 
