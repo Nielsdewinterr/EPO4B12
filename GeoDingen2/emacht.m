@@ -83,7 +83,7 @@ plot(t,x)
 plot(t,xt)
     
     
- straightdist=;
+%  straightdist=;
  turndist=1;
  
   
