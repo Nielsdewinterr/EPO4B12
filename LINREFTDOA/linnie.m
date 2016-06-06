@@ -18,15 +18,19 @@ x23=sign(c)*1/2*sqrt((c^4-4*c^2*y.^2-xlim1^2*c^2)/(c^2-xlim1^2))+xlim1/2;
 x14=sign(d)*1/2*sqrt((d^4-4*d^2*(-y+ylim1).^2-xlim1^2*d^2)/(d^2-xlim1^2))+xlim1/2;
 
 
+
+%snijpunt vinden tussen y12 en y34 en de y waarde van dat snijpunt gebruiken
 cut1=abs(y12-y34);
- 
 [mini sampy]=min(cut1);
 y1=y12(sampy)
 
+%snijpunt vinden tussen x23 en x14 en de x waarde van dat snijpunt gebruiken
 cut2=abs(x23-x14);
 [mini sampx]=min(cut2);
-x1=x23(sampx)
+x1=x23(sampx) %
 
+
+%plots
 hold on
 plot(x,y12)
 plot(x,y34)
