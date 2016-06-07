@@ -1,8 +1,7 @@
 
 function [x1,y1]=linnie(r12,r14,r23,r34)
-tic
-xlim1=4.53
-ylim1=4.14
+xlim1=5.4;
+ylim1=5.7;
 a=r12
 b=r34
 c=r23
@@ -31,15 +30,12 @@ x1=x23(sampx) %
 
 
 %plots
-hold on
-plot(x,y12)
-plot(x,y34)
-plot(x23,y)
-plot(x14,y)
-xlim([0 4.53]);
-ylim([0 4.14]);
-hold off
-
-toc
-
+% hold on
+% plot(x,y12)
+% plot(x,y34)
+% plot(x23,y)
+% plot(x14,y)
+% xlim([0 4.53]);
+% ylim([0 4.14]);
+% hold off
 end
