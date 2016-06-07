@@ -1,5 +1,5 @@
 function [ straighttime, turntime ] = dist2sec(straight,turn,OoF)
-
+close all;
 %astraight=0.88
 %bstraight=0.51
 vttheo=0.5;%origional:0.52
@@ -11,6 +11,9 @@ t=[0:0.002:10];
 a=1.03;
 b=0.91;
 c=log(a)/-b;
+% a=1.38;
+% b=0.82;
+% c=log(a)/-b;
 
 %turn constants
 at=0.5;
@@ -45,18 +48,18 @@ tmp = abs(xt-turn);
 turntime=turntime/500;
 
 %% plot
-% plot(t,v)
-% hold on
-% plot(t,vt)
-% hold on
-% plot([0 10],[vtheo vtheo])
-% hold on
-% plot([0 10],[vttheo vttheo])
-% 
-% 
-% figure(2)
-% hold on
-% plot(t,x)
+plot(t,v)
+hold on
+plot(t,vt)
+hold on
+plot([0 10],[vtheo vtheo])
+hold on
+plot([0 10],[vttheo vttheo])
+
+
+figure(2)
+hold on
+plot(t,x)
 % hold on
 % plot(t,xt)
 % hold on    
