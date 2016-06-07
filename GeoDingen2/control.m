@@ -45,7 +45,7 @@ if (place == 0 || isnan(place)) && (xor(D(2)>C(2),sind(rot)<0))          %straig
     turntime=0;
     OoF=0;
     straightdist = abs((sqrt((C(1)-D(1))^2+(C(2)-D(2))^2)));
-    [~,straighttime]=dist2sec(straightdist,0,0);
+    [straighttime,~]=dist2sec(straightdist,0,0);
     turntimetheo = 0;
     straighttimetheo = straightdist/speedrecht;
     %plot all
@@ -150,7 +150,7 @@ else
             AngleT2=wrapTo360(rot-orientation);
             turndist = (2*pi*AngleT2/360)*R;
             [~,turntime]=dist2sec(0,turndist,0);
-            turntimetheo = turndist/speedrecht;
+            turntimetheo = turndist/speedcirkel;
         else %turn left
             DX1=[-distDT*sind(-rotMDX+angleMD),-distDT*cosd(-rotMDX+angleMD)];
             T1 = D + DX1;            
@@ -162,7 +162,7 @@ else
             AngleT1=wrapTo360(360-(rot-orientation));
             turndist = (2*pi*AngleT1/360)*R;
             [~,turntime]=dist2sec(0,turndist,0);
-            turntimetheo = turndist/speedrecht;
+            turntimetheo = turndist/speedcirkel;
         end
 
         %plot circle

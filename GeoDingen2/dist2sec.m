@@ -35,13 +35,13 @@ else
     straighttmp = times*1.5;
 end
 tmp = abs(x-(straight-times*0.7));
-[straighttime straighttime]=min(tmp);
+[~, straighttime]=min(tmp);
 straighttime=straighttime/500;
 straighttime=straighttime+straighttmp;
 
 %turn
 tmp = abs(xt-turn);
-[turntime turntime]=min(tmp);
+[~, turntime]=min(tmp);
 turntime=turntime/500;
 
 %% plot

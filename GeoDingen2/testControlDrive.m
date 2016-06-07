@@ -23,7 +23,7 @@ if OoF==1
     [turntime,turntimetheo,orientation,lr,straighttime,straighttimetheo,OoF] = control(x,y,rot,xdest,ydest)
 end
 
-if rem(straighttime,1)>0.3
+if rem(straighttime,1.5)>0.3
     turns = fix(straighttime/1.5);
 else
     turns = (fix(straighttime/1.5))-1.5;
@@ -56,8 +56,8 @@ end
     %     EPOCommunications('transmit', 'M157');
         pause(1.5)
         %drive forward
-        x = x + timetheorecht*speedrecht*cosd(orientation);
-        y = y + timetheorecht*speedrecht*sind(orientation);     
+        x = x + timetheorecht*speedrecht*cosd(orientation)
+        y = y + timetheorecht*speedrecht*sind(orientation)     
     %         EPOCommunications('transmit', 'M143');
     %         pause(0.3)
     %         EPOCommunications('transmit', 'M150');
@@ -97,37 +97,39 @@ y = y + straighttimetheo*speedrecht*sind(orientation);
 %         EPOCommunications('transmit', 'M150');
 
 function [x,y]=tdoatest(x,y)
-%     xtdoa = x+((rand-0.5)/2);
-%     ytdoa = y+((rand-0.5)/2);
-% %         [r12,r13,r14,r23,r24,r34] = TDOA();
-% %         [x,y] = LIN(r12,r13,r14,r23,r24,r34);
-%     plot(x,y,'c*')
-%     plot(xtdoa,ytdoa,'x')
-%     if sqrt((x-xtdoa)^2+(y-ytdoa)^2)<0.2
-%         x=xtdoa;
-%         y=ytdoa;
-%     end
+    xtdoa = x+((rand-0.5)/2);
+    ytdoa = y+((rand-0.5)/2);
+%         [r12,r13,r14,r23,r24,r34] = TDOA();
+%         [xtdoa,ytdoa] = LIN(r12,r13,r14,r23,r24,r34);
+    if not(isnan(xtdoa)||isnan(ytdoa))
+        plot(x,y,'c*')
+        plot(xtdoa,ytdoa,'x')
+        if sqrt((x-xtdoa)^2+(y-ytdoa)^2)<0.2
+            x=xtdoa;
+            y=ytdoa;
+        end
+    end
     
 function [x,y,orientation]=tdoatest2(x,y,orientation, xrota,yrota)
-%     xtdoa = x+((rand-0.5)/2);
-%     ytdoa = y+((rand-0.5)/2);
-% %         [r12,r13,r14,r23,r24,r34] = TDOA();
-% %         [x,y] = LIN(r12,r13,r14,r23,r24,r34);
-%     plot(x,y,'c*')
-%     plot(xtdoa,ytdoa,'x')
-%     if sqrt((x-xtdoa)^2+(y-ytdoa)^2)<0.2
-%         x=xtdoa;
-%         y=ytdoa;
-%     end
-%     xrotb=x;
-%     yrotb=y;
-%     if sqrt((xrota-xrotb)^2+(yrota-yrotb)^2)>0.3
-%         if xrota<xrotb
-%         orientation = atand((yrota-yrotb)/(xrota-xrotb))
-%         else
-%         orientation = atand((yrota-yrotb)/(xrota-xrotb))+180
-%         end
-%     else
-%         orientation = orientation;
-%     end
+    xtdoa = x+((rand-0.5)/2);
+    ytdoa = y+((rand-0.5)/2);
+%         [r12,r13,r14,r23,r24,r34] = TDOA();
+%         [xtdoa,ytdoa] = LIN(r12,r13,r14,r23,r24,r34);
+    if not(isnan(xtdoa)||isnan(ytdoa))
+        plot(x,y,'c*')
+        plot(xtdoa,ytdoa,'x')
+        if sqrt((x-xtdoa)^2+(y-ytdoa)^2)<0.2
+            x=xtdoa;
+            y=ytdoa;
+        end
+        xrotb=x;
+        yrotb=y;
+        if sqrt((xrota-xrotb)^2+(yrota-yrotb)^2)>0.3
+            if xrota<xrotb
+            orientation = atand((yrota-yrotb)/(xrota-xrotb))
+            else
+            orientation = atand((yrota-yrotb)/(xrota-xrotb))+180
+            end
+        end
+    end
 
