@@ -46,8 +46,6 @@ if (place == 0 || isnan(place)) && (xor(D(2)>C(2),sind(rot)<0))          %straig
     OoF=0;
     straightdist = abs((sqrt((C(1)-D(1))^2+(C(2)-D(2))^2)));
     [~,straighttime]=dist2sec(straightdist,0,0);
-    turntimetheo = 0;
-    straighttimetheo = straightdist/speedrecht;
     %plot all
     scatter(C(1),C(2))
     text(C(1)+0.15,C(2),'Car');
@@ -81,7 +79,6 @@ else
     %this distance DT will also be needed to calculate how long the car has to 
     %travel straight.
     [straighttime,~]=dist2sec(distDT,0,0);
-    straighttimetheo = distDT/speedrecht;
     %calculate DX
     angleMD=atan2d((D(1)-M(1)),(D(2)-M(2)));
     %detect going out of field
@@ -118,8 +115,6 @@ else
         OoF=1;
         straightdist=(max(back));
         [straighttime,~]=dist2sec(straightdist,0,1);
-        straighttimetheo = straightdist/speedback;
-        turntimetheo=0;
 
         %plot all
         scatter(C(1),C(2))
@@ -150,7 +145,6 @@ else
             AngleT2=wrapTo360(rot-orientation);
             turndist = (2*pi*AngleT2/360)*R;
             [~,turntime]=dist2sec(0,turndist,0);
-            turntimetheo = turndist/speedrecht;
         else %turn left
             DX1=[-distDT*sind(-rotMDX+angleMD),-distDT*cosd(-rotMDX+angleMD)];
             T1 = D + DX1;            
@@ -162,7 +156,6 @@ else
             AngleT1=wrapTo360(360-(rot-orientation));
             turndist = (2*pi*AngleT1/360)*R;
             [~,turntime]=dist2sec(0,turndist,0);
-            turntimetheo = turndist/speedrecht;
         end
 
         %plot circle

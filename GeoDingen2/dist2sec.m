@@ -37,12 +37,12 @@ end
 tmp = abs(x-(straight-times*0.7));
 [straighttime straighttime]=min(tmp);
 straighttime=straighttime/500;
-straighttime=straighttime+straighttmp
+straighttime=straighttime+straighttmp;
 
 %turn
 tmp = abs(xt-turn);
 [turntime turntime]=min(tmp);
-turntime=turntime/500
+turntime=turntime/500;
 
 %% plot
 % plot(t,v)

@@ -74,13 +74,13 @@ if lr == -1 %turn left
 %         EPOCommunications('transmit', 'M157');
     pause(turntime)
     x = x + R*cosd(rot+90)+R*cosd(rot-90+((turntimetheo*speedcirkel*360)/(2*pi*R)));
-    y = y + R*sind(rot+90)+R*sind(rot-90+((turntimetheo*speedcirkel*360)/(2*pi*R)));
+    y = y + R*sind(rot+90)+R*sind(rot-90+((turntime*speedcirkel*360)/(2*pi*R)));
 elseif lr == 1 %turn right
 %         EPOCommunications('transmit', 'D200');
 %         EPOCommunications('transmit', 'M157');  
     pause(turntime)
-    x = x + R*cosd(rot-90)+R*cosd(rot-90-((turntimetheo*speedcirkel*360)/(2*pi*R)));
-    y = y + R*sind(rot-90)+R*sind(rot-90-((turntimetheo*speedcirkel*360)/(2*pi*R)));
+    x = x + R*cosd(rot-90)+R*cosd(rot-90-((turntime*speedcirkel*360)/(2*pi*R)));
+    y = y + R*sind(rot-90)+R*sind(rot-90-((turntime*speedcirkel*360)/(2*pi*R)));
 else %no turn
 end
     %         EPOCommunications('transmit', 'M143');
@@ -90,8 +90,8 @@ end
 %         EPOCommunications('transmit', 'D150');
 %         EPOCommunications('transmit', 'M157');
 pause(straighttime)
-x = x + straighttimetheo*speedrecht*cosd(orientation);
-y = y + straighttimetheo*speedrecht*sind(orientation);
+x = x + straighttime*speedrecht*cosd(orientation);
+y = y + straighttime*speedrecht*sind(orientation);
 %         EPOCommunications('transmit', 'M143');
 %         pause(0.3)
 %         EPOCommunications('transmit', 'M150');
