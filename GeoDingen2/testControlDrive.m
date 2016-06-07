@@ -97,8 +97,8 @@ y = y + straighttimetheo*speedrecht*sind(orientation);
 %         EPOCommunications('transmit', 'M150');
 
 function [x,y]=tdoatest(x,y)
-    xtdoa = x+((rand-0.5)/2);
-    ytdoa = y+((rand-0.5)/2);
+    xtdoa = x%+((rand-0.5)/4);
+    ytdoa = y%+((rand-0.5)/4);
 %         [r12,r13,r14,r23,r24,r34] = TDOA();
 %         [xtdoa,ytdoa] = LIN(r12,r13,r14,r23,r24,r34);
     if not(isnan(xtdoa)||isnan(ytdoa))
@@ -111,8 +111,8 @@ function [x,y]=tdoatest(x,y)
     end
     
 function [x,y,orientation]=tdoatest2(x,y,orientation, xrota,yrota)
-    xtdoa = x+((rand-0.5)/2);
-    ytdoa = y+((rand-0.5)/2);
+    xtdoa = x%+((rand-0.5)/4);
+    ytdoa = y%+((rand-0.5)/4);
 %         [r12,r13,r14,r23,r24,r34] = TDOA();
 %         [xtdoa,ytdoa] = LIN(r12,r13,r14,r23,r24,r34);
     if not(isnan(xtdoa)||isnan(ytdoa))
