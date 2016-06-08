@@ -71,8 +71,8 @@ vt=at-exp(-bt*(t+ct));
 xt=(at*t+1/bt*exp(-bt*(t+ct)))-exp(-bt*c)/bt;
 
 %%lineare benaderig
-tmeting=[0,.5,1,1.5,2,3];
-dmeting=[0,.1,.3,.7,1.1,2.3]
+tmeting=[0,.5,1,1.5,2,2.5,3];
+dmeting=[0,.2,.52,.91,1.39,2.03,2.66]
 
 plot(t,v)
 hold on
