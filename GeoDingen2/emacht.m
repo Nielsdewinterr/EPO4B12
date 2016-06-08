@@ -71,8 +71,8 @@ vt=at-exp(-bt*(t+ct));
 xt=(at*t+1/bt*exp(-bt*(t+ct)))-exp(-bt*c)/bt;
 
 %%lineare benaderig
-tmeting=[.5,1,1.5,2,3];
-dmeting=[.1,.3,.7,1.1,2.3]
+tmeting=[0,.5,1,1.5,2,3];
+dmeting=[0,.1,.3,.7,1.1,2.3]
 
 plot(t,v)
 hold on
@@ -81,10 +81,10 @@ plot(t,vt)
 
 figure(2)
 hold on
-plot(t,x)
-hold on
-plot(t,xt)
-hold on
+% plot(t,x)
+% hold on
+% plot(t,xt)
+% hold on
 plot(tmeting,dmeting)
 hold on
 plot([0:0.01:3],interp1(tmeting,dmeting,[0:0.01:3],'spline'))
