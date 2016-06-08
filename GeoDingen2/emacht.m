@@ -70,7 +70,9 @@ x=(a*t+1/b*exp(-b*(t+c)))-exp(-b*c)/b;
 vt=at-exp(-bt*(t+ct));
 xt=(at*t+1/bt*exp(-bt*(t+ct)))-exp(-bt*c)/bt;
 
-
+%%lineare benaderig
+tmeting=[.5,1,1.5,2,3];
+dmeting=[.1,.3,.7,1.1,2.3]
 
 plot(t,v)
 hold on
@@ -80,22 +82,9 @@ plot(t,vt)
 figure(2)
 hold on
 plot(t,x)
+hold on
 plot(t,xt)
-    
-    
-%  straightdist=;
- turndist=1;
- 
-  
- 
-[mins ts]=min(abs(x-straightdist));
-straighttime=ts/1000
-
-[mint tt]=min(abs(xt-turndist));
-turntime=tt/1000;
-
-
-
-% a=sqrt((x-xr)^2+(y+yr)^2)
-% 
-% y=
+hold on
+plot(tmeting,dmeting)
+hold on
+plot([0:0.01:3],interp1(tmeting,dmeting,[0:0.01:3],'spline'))
