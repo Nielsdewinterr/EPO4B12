@@ -1,0 +1,15 @@
+
+time=1
+
+status = EPOCommunications('transmit','D100')
+status = EPOCommunications('transmit','M158')
+pause(time)
+
+status = EPOCommunications('transmit','M140')
+pause(0.3)
+status = EPOCommunications('transmit','M150')
+EPOCommunications('transmit','D150')
+
+%6s =335
+%0.5=10
+%1=30
