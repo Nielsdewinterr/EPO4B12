@@ -1,0 +1,6 @@
+load 'refs.mat';
+load '1.mat';
+ref = refc12500;
+a = inputbuffer(:,1);
+b
+[r12,r13,r14,r23,r24,r34] =TDOA(a,b,c,d,ref)
