@@ -1,4 +1,4 @@
-function [x,y,orientation] = testControlDrive(x,y,rot,xdest,ydest,ref,curve)
+function [x,y,orientation] = testControlDrive(x,y,rot,xdest,ydest,ref,curve,challenge)
 clf;
 speedcirkel=0.74;%origional:0.52
 speedrecht=0.79;%origional:1.19
@@ -8,9 +8,12 @@ R=0.85;%origional:0.925
 
 [turntime,turntimetheo,orientation,lr,straighttime,straighttimetheo,OoF] = control(x,y,rot,xdest,ydest,curve);
     [x,y]=tdoatest(x,y,ref);
-        if (checkdistance(x,y,xdest,ydest)==1)
-           return; 
-        end
+    if (checkdistance(x,y,xdest,ydest)==1)
+       return; 
+    end
+    if (challenge==3)
+        [x,y]=objectontwijk(x,y,rot);
+    end
 
 if OoF==1
             EPOCommunications('transmit', 'D150');
@@ -174,4 +177,4 @@ function arrived = checkdistance(x,y,xdest,ydest)
         arrived = 1;
     else
         arrived = 0;
-    end
+    end 

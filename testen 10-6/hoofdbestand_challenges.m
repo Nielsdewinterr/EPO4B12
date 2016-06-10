@@ -43,11 +43,11 @@ begin = [1,1,-90];
 tussen = [2.76,4.7];
 eind = [4.5,1];
 if(challenge >1)
-    [x,y,rot]=testControlDrive(begin(1),begin(2),begin(3),tussen(1),tussen(2),ref1,curve);    
+    [x,y,rot]=testControlDrive(begin(1),begin(2),begin(3),tussen(1),tussen(2),ref1,curve,challenge);    
     input('continue?')
-    testControlDrive(x,y,rot,eind(1),eind(2),ref1,curve);
+    testControlDrive(x,y,rot,eind(1),eind(2),ref1,curve,challenge);
 else
-    testControlDrive(begin(1),begin(2),begin(3),eind(1),eind(2),ref1,curve);
+    testControlDrive(begin(1),begin(2),begin(3),eind(1),eind(2),ref1,curve,challenge);
 end
 EPOCommunications('close');
 
