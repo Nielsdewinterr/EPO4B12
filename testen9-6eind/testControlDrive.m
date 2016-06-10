@@ -8,6 +8,9 @@ R=0.85;%origional:0.925
 
 [turntime,turntimetheo,orientation,lr,straighttime,straighttimetheo,OoF] = control(x,y,rot,xdest,ydest,curve);
     [x,y]=tdoatest(x,y,ref);
+        if (checkdistance==1)
+           return; 
+        end
 
 if OoF==1
             EPOCommunications('transmit', 'D150');
@@ -19,6 +22,9 @@ if OoF==1
             pause(0.3)
             EPOCommunications('transmit', 'M150');
     [x,y]=tdoatest(x,y,ref)
+        if (checkdistance==1)
+           return; 
+        end
     [turntime,turntimetheo,orientation,lr,straighttime,straighttimetheo,OoF] = control(x,y,rot,xdest,ydest,curve);
 end
 
@@ -48,6 +54,9 @@ end
             pause(0.3)
             EPOCommunications('transmit', 'M150');
         [x,y]=tdoatest(x,y,ref);
+        if (checkdistance==1)
+           return; 
+        end
         xrota=x;
         yrota=y;
 
@@ -61,6 +70,9 @@ end
             pause(0.3)
             EPOCommunications('transmit', 'M150');
         [x,y,orientation]=tdoatest2(x,y,orientation,xrota,yrota,ref);
+        if (checkdistance==1)
+           return; 
+        end
         
         rot=orientation;
         [turntime,turntimetheo,orientation,lr,straighttime,straighttimetheo,OoF] = control(x,y,rot,xdest,ydest,curve);
@@ -85,6 +97,9 @@ end
             pause(0.3)
             EPOCommunications('transmit', 'M150');
         [x,y]=tdoatest(x,y,ref)
+        if (checkdistance==1)
+           return; 
+        end
         xrota=x;
         yrota=y;
         EPOCommunications('transmit', 'D150');
@@ -96,6 +111,9 @@ y = y + straighttimetheo*speedrecht*sind(orientation);
         pause(0.3)
         EPOCommunications('transmit', 'M150');
         [x,y,orientation]=tdoatest2(x,y,orientation,xrota,yrota,ref);
+        if (checkdistance==1)
+           return; 
+        end
 
 function [x,y]=tdoatest(x,y,ref)
 %     xtdoa = x%+((rand-0.5)/4);
@@ -150,4 +168,10 @@ function [x,y,orientation]=tdoatest2(x,y,orientation, xrota,yrota,ref)
             orientation = real(atand((yrota-yrotb)/(xrota-xrotb))+180)
             end
         end
-
+            
+function arrived = checkdistance(x,y,xdest,ydest)
+    if sqrt((x-xdest)^2+(y-ydest)^2)<.2
+        arrived = 1;
+    else
+        arrived = 0;
+    end
