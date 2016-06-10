@@ -13,12 +13,12 @@ function [turntime,turntimetheo,orientation,lr,straighttime,straighttimetheo,OoF
 %Mx,My: center of circle
 %D: destination point
 %T: Target point on circle
-fieldx=5.70;
-fieldy=5.40;
+fieldx=4.53;
+fieldy=4.14;
 speedcirkel=0.74;%origional:0.52
 speedrecht=0.79;%origional:1.19
 speedback=0.79;
-R=0.85;%origional:0.925
+R=0.9;%origional:0.925
 D=[xdest,ydest];
 C=[x,y];
 

@@ -1,4 +1,4 @@
-function varargout = gui(varargin)
+opfunction varargout = gui(varargin)
 % GUI MATLAB code for gui.fig
 %      GUI, by itself, creates a new GUI or raises the existing
 %      singleton*.

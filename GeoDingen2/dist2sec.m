@@ -1,11 +1,11 @@
 function [ straighttime, turntime ] = dist2sec(straight,turn,OoF,dapprox)
-%astraight=0.88
-%bstraight=0.51
-vttheo=0.5;%origional:0.52
-vtheo=1.03;%origional:1.19
 
+x = interp1([0,0.5,1,1.5,2,2.5,3,6],dapprox,[0:0.01:6],'spline');
+t = interp1([0,0.6,1.2,1.8,2.4,2.9,3.5,6],dapprox*0.75,[0:0.01:6],'spline');
 
-x = interp1([0,0.5,1,1.5,2,2.5,3],dapprox,[0:0.01:3],'spline');
+% plot([0:0.01:3],x)
+% hold on
+% plot([0:0.01:3],t)
 singledistance = x(150);
 
 %% calculate time
@@ -19,13 +19,13 @@ else
 end
 tmp = abs(x-(straight-times*singledistance));
 [~, straighttime]=min(tmp);
-straighttime=straighttime/500;
+straighttime=straighttime/300;
 straighttime=straighttime+straighttmp;
 
-% %turn
-% tmp = abs(xt-turn);
-% [~, turntime]=min(tmp);
-% turntime=turntime/500;
+%turn
+tmp = abs(t-turn);
+[~, turntime]=min(tmp);
+turntime=turntime/300;
 
 %% plot
 % plot(t,v)
