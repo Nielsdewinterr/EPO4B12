@@ -43,15 +43,15 @@ end
 
     for a = 1:1:turns
         %turn and drive
-        [x,y]=turn(lr,x,y,rot,turntimetheo,turntime,speedcirkel,R);
+        
         [x,y]=tdoatest(x,y,ref);
         if (checkdistance(x,y,xdest,ydest)==1)
            return; 
         end
         if (challenge==3)
-            [x,y,orientation]=Objectontwijk(x,y,rot);
+            [x,y,orientation]=Objectontwijk(x,y,rot)
             [turntime,turntimetheo,orientation,lr,straighttime,straighttimetheo,OoF] = control(x,y,rot,xdest,ydest,curve);
-            [x,y]=turn(lr,x,y,rot,turntimetheo,turntime,speedcirkel,R);
+
         end
         xrota=x;
         yrota=y;
@@ -59,43 +59,56 @@ end
         EPOCommunications('transmit', 'D150');
         EPOCommunications('transmit', 'M158');
         pause(1.5)
-        %drive forward    
+        %drive forward
+        x = x + timetheorecht*speedrecht*cosd(orientation)
+        y = y + timetheorecht*speedrecht*sind(orientation)     
             EPOCommunications('transmit', 'M143');
             pause(0.3)
             EPOCommunications('transmit', 'M150');
-        x = x + timetheorecht*speedrecht*cosd(orientation)
-        y = y + timetheorecht*speedrecht*sind(orientation) 
         [x,y,orientation]=tdoatest2(x,y,orientation,xrota,yrota,ref);
         if (checkdistance(x,y,xdest,ydest)==1)
            return; 
         end
-        if (challenge==3)
-            [x,y,orientation]=Objectontwijk(x,y,rot);
-            [turntime,turntimetheo,orientation,lr,straighttime,straighttimetheo,OoF] = control(x,y,rot,xdest,ydest,curve);
-            [x,y]=turn(lr,x,y,rot,turntimetheo,turntime,speedcirkel,R);
-        end
+    if (challenge==3)
+        [x,y,orientation]=Objectontwijk(x,y,rot)
+    end
         
         rot=orientation;
         [turntime,turntimetheo,orientation,lr,straighttime,straighttimetheo,OoF] = control(x,y,rot,xdest,ydest,curve);
     end
-        %last round
-        [x,y]=turn(lr,x,y,rot,turntimetheo,turntime,speedcirkel,R)   
+
+%turn and drive
+if lr == -1 %turn left
+        EPOCommunications('transmit', 'D200');
+        EPOCommunications('transmit', 'M158');
+    pause(turntime)
+    x = x + R*cosd(rot+90)+R*cosd(rot-90+((turntimetheo*speedcirkel*360)/(2*pi*R)));
+    y = y + R*sind(rot+90)+R*sind(rot-90+((turntimetheo*speedcirkel*360)/(2*pi*R)));
+elseif lr == 1 %turn right
+        EPOCommunications('transmit', 'D100');
+        EPOCommunications('transmit', 'M158');  
+    pause(turntime)
+    x = x + R*cosd(rot-90)+R*cosd(rot-90-((turntimetheo*speedcirkel*360)/(2*pi*R)));
+    y = y + R*sind(rot-90)+R*sind(rot-90-((turntimetheo*speedcirkel*360)/(2*pi*R)));
+else %no turn
+end
+            EPOCommunications('transmit', 'M143');
+            pause(0.3)
+            EPOCommunications('transmit', 'M150');
         [x,y]=tdoatest(x,y,ref)
         if (checkdistance(x,y,xdest,ydest)==1)
            return; 
         end
-        if (challenge==3)
-            [x,y,orientation]=Objectontwijk(x,y,rot);
-            [turntime,turntimetheo,orientation,lr,straighttime,straighttimetheo,OoF] = control(x,y,rot,xdest,ydest,curve);
-            [x,y]=turn(lr,x,y,rot,turntimetheo,turntime,speedcirkel,R);
-        end
+    if (challenge==3)
+        [x,y,orientation]=Objectontwijk(x,y,rot);
+    end
         xrota=x;
         yrota=y;
         EPOCommunications('transmit', 'D150');
         EPOCommunications('transmit', 'M158');
-        pause(straighttime)
-        x = x + straighttimetheo*speedrecht*cosd(orientation);
-        y = y + straighttimetheo*speedrecht*sind(orientation);
+pause(straighttime)
+x = x + straighttimetheo*speedrecht*cosd(orientation);
+y = y + straighttimetheo*speedrecht*sind(orientation);
         EPOCommunications('transmit', 'M143');
         pause(0.3)
         EPOCommunications('transmit', 'M150');
@@ -165,7 +178,7 @@ function arrived = checkdistance(x,y,xdest,ydest)
         arrived = 0;
     end 
     
-function [x,y]=turn(lr,x,y,rot,turntimetheo,turntime,speedcirkel,R)
+function turn(lr,x,y,rot,turntimetheo,turntime,speedcirkel,)
     if lr == -1 %turn left
         EPOCommunications('transmit', 'D200');
         EPOCommunications('transmit', 'M158');

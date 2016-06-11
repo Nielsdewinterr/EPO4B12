@@ -45,24 +45,24 @@ end
 end
 
 function Linksaf()
-EPOCommunications('transmit','D200');
-EPOCommunications('transmit','M157');
-pause(1.2)
-EPOCommunications('transmit','M158');
-EPOCommunications('transmit','D150');
-pause(1.2)
-EPOCommunications('transmit','M150');
-EPOCommunications('transmit','D150');
+% EPOCommunications('transmit','D200');
+% EPOCommunications('transmit','M157');
+% pause(1.2)
+% EPOCommunications('transmit','M158');
+% EPOCommunications('transmit','D150');
+% pause(1.2)
+% EPOCommunications('transmit','M150');
+% EPOCommunications('transmit','D150');
 end
 
 function Rechtsaf()
-EPOCommunications('transmit','D100');
-EPOCommunications('transmit','M157');
-pause(1.2)
-EPOCommunications('transmit','M150');
-EPOCommunications('transmit','D150');
-pause(1.2)
-EPOCommunications('transmit','M158');
-EPOCommunications('transmit','D150');
+% EPOCommunications('transmit','D100');
+% EPOCommunications('transmit','M157');
+% pause(1.2)
+% EPOCommunications('transmit','M150');
+% EPOCommunications('transmit','D150');
+% pause(1.2)
+% EPOCommunications('transmit','M158');
+% EPOCommunications('transmit','D150');
 end
 
