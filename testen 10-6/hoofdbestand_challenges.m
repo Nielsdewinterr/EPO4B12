@@ -2,10 +2,10 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Project: EPO-4                                                        %
 % Group: B11, Out, Klein, Kruijsse, De Winter                           %
-% Name File:                                                            %
-% Purpose:                                                              %
-%                                                                       %
-%                                                                       %
+% Name File: hoofdbestand_challenges.m                                  %
+% Purpose: Main-file, gets values from the field and give the start dir %
+%  and rotation to the drive file. Depending on the challenge type the  %
+%  object detection is activated and mid point is activated.            %
 %                                                                       %
 %                                                                       %
 %                                                                       %
@@ -50,14 +50,15 @@ load('THEref.mat');
 % for i=1:2
 %     eind(i)=str2double(b(i)) 
 % end
-Voltage = 17.6;
+Voltage = 18.0;
 curve = timedistance(Voltage);
-challenge =2;
-begin = [1,1,-90];
-tussen = [2.76,4.7];
-eind = [4.5,1];
+challenge =1;
+begin = [0,.7,90];
+tussen = [370,190];
+eind = [405,460];
 if(challenge >1)
-    [x,y,rot]=testControlDrive(begin(1),begin(2),begin(3),tussen(1),tussen(2),ref1,curve,challenge);    
+    [x,y,rot]=testControlDrive(begin(1),begin(2),begin(3),tussen(1),tussen(2),ref1,curve,challenge); 
+    pause(5);
     input('continue?')
     testControlDrive(x,y,rot,eind(1),eind(2),ref1,curve,challenge);
 else
