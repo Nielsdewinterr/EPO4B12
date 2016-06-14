@@ -50,13 +50,13 @@ xlim([-0.5 vx+0.5]);
 ylim([-0.5 vy+0.5]);
 Voltage = 17.9;
 curve = timedistance(Voltage);
-challenge = 2; 
+challenge = 3; 
 begin = [0,0.70,0];
 tussen = [1.9,3.6];
 eind = [4.6,3.95];
 xlim([0 vx]);
 ylim([0 vy]);
-if(challenge == 2)
+if((challenge == 2)||(challenge == 3))
     [x,y,rot]=testControlDrive(begin(1),begin(2),begin(3),tussen(1),tussen(2),ref1,curve,challenge);    
     input('continue?')
     testControlDrive(x,y,rot,eind(1),eind(2),ref1,curve,challenge);

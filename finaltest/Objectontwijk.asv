@@ -13,8 +13,8 @@ if(distR == 0)
     distR = 1000;
 end
     if((distL < distanceobject) && (distR < distanceobject))
-        xobj = x + ((distL+distR)/2)*cosd(rot)
-        yobj = y + ((distL+distR)/2)*sind(rot)
+        xobj = x + ((distL+distR)/2)*cosd(rot);
+        yobj = y + ((distL+distR)/2)*sind(rot);
         if ((distL+distR)/2)<toclose
            backoff(); 
            x = x + .67*cosd(rot+180);
@@ -26,17 +26,17 @@ end
         hold on
         plot(xobj,yobj,'^')
 %         plot([xobj,x],[yobj,y],'-.')
-        punt1obj = [xobj+0.2*cosd(rot+90),yobj+0.2*sind(rot+90)];
-        punt2obj = [xobj+0.2*cosd(rot-90),yobj+0.2*sind(rot-90)];
+        punt1obj = [xobj+0.2*cosd(rot+90),yobj+0.2*sind(rot+90)]
+        punt2obj = [xobj+0.2*cosd(rot-90),yobj+0.2*sind(rot-90)]
         hold on
         plot([punt1obj(1),punt2obj(1)],[punt1obj(2),punt2obj(2)],'--')
         %car
-        x = x + .92*cosd(rot+33) + 0.33*cosd(rot);
-        y = y + .92*sind(rot+33) + 0.33*sind(rot);
+        x = x + .96*cosd(rot+33);
+        y = y + .96*sind(rot+33);
 %         rot = rot+45;        
     elseif(distL < distanceobject)
-        xobj = x + distL*cosd(rot)+0.2*cosd(rot+90)
-        yobj = y + distL*sind(rot)+0.2*sind(rot+90)
+        xobj = x + distL*cosd(rot)+0.2*cosd(rot+90);
+        yobj = y + distL*sind(rot)+0.2*sind(rot+90);
         if distL<toclose
            backoff(); 
            x = x + .67*cosd(rot+180);
@@ -48,17 +48,17 @@ end
         hold on
         plot(xobj,yobj,'^')
 %         plot([xobj,x],[yobj,y],'-.')
-        punt1obj = [xobj+0.2*cosd(rot+90),yobj+0.2*sind(rot+90)];
-        punt2obj = [xobj+0.2*cosd(rot-90),yobj+0.2*sind(rot-90)];
+        punt1obj = [xobj+0.2*cosd(rot+90),yobj+0.2*sind(rot+90)]
+        punt2obj = [xobj+0.2*cosd(rot-90),yobj+0.2*sind(rot-90)]
         hold on
         plot([punt1obj(1),punt2obj(1)],[punt1obj(2),punt2obj(2)],'--')
         %car
-        x = x + 0.95*cosd(rot-33) + .33*cosd(rot);
-        y = y + 0.95*sind(rot-33) + .33*sind(rot);
+        x = x + cosd(rot-33) + 1*cosd(rot);
+        y = y + sind(rot-33) + 1*sind(rot);
 %         rot = rot-45;
     elseif(distR < distanceobject)
-        xobj = x + distR*cosd(rot)+0.2*cosd(rot-90)
-        yobj = y + distR*sind(rot)+0.2*sind(rot-90)
+        xobj = x + distR*cosd(rot)+0.2*cosd(rot-90);
+        yobj = y + distR*sind(rot)+0.2*sind(rot-90);
         if distR<toclose
            backoff(); 
            x = x + .67*cosd(rot+180);
@@ -75,8 +75,8 @@ end
         hold on
         plot([punt1obj(1),punt2obj(1)],[punt1obj(2),punt2obj(2)],'--')
         %car
-        x = x + .91*cosd(rot+33) + .33*cosd(rot);
-        y = y + .91*sind(rot+33) + .33*sind(rot);
+        x = x + .96*cosd(rot+33) + 1*cosd(rot);
+        y = y + .96*sind(rot+33) + 1*sind(rot);
 %         rot = rot+45;
     else
         return;

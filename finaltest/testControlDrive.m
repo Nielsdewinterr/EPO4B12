@@ -5,11 +5,7 @@ timetheorecht=0.7/speedrecht;
 speedback=0.79;
 R=0.85;%origional:0.925
 
-[turntime,turntimetheo,orientation,lr,straighttime,straighttimetheo,OoF] = control(x,y,rot,xdest,ydest,curve)
-if (challenge==3)
-    [x,y,rot]=Objectontwijk(x,y,rot)
-    [turntime,turntimetheo,orientation,lr,straighttime,straighttimetheo,OoF] = control(x,y,rot,xdest,ydest,curve);
-end
+[turntime,turntimetheo,orientation,lr,straighttime,straighttimetheo,OoF] = control(x,y,rot,xdest,ydest,curve);
 
 if OoF==1
 % % %     EPOCommunications('transmit', 'D150');
@@ -24,6 +20,10 @@ if OoF==1
     if (checkdistance(x,y,xdest,ydest)==1)
        return; 
     end
+    [turntime,turntimetheo,orientation,lr,straighttime,straighttimetheo,~] = control(x,y,rot,xdest,ydest,curve);
+end
+if (challenge==3)
+    [x,y,rot]=Objectontwijk(x,y,rot);
     [turntime,turntimetheo,orientation,lr,straighttime,straighttimetheo,~] = control(x,y,rot,xdest,ydest,curve);
 end
 
