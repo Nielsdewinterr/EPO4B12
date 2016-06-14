@@ -1,14 +1,9 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Project: EPO-4                                                        %
 % Group: B11, Out, Klein, Kruijsse, De Winter                           %
-% Name File:                                                            %
-% Purpose:                                                              %
-%                                                                       %
-%                                                                       %
-%                                                                       %
-%                                                                       %
-%                                                                       %
-%                                                                       %
+% Name File:  Control.m                                                 %
+% Purpose: Control the direction and heading of the car.                %
+%          And plot the turn                                            %
 %                                                                       %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 

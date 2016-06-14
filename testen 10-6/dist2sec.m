@@ -1,14 +1,9 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Project: EPO-4                                                        %
 % Group: B11, Out, Klein, Kruijsse, De Winter                           %
-% Name File:                                                            %
-% Purpose:                                                              %
-%                                                                       %
-%                                                                       %
-%                                                                       %
-%                                                                       %
-%                                                                       %
-%                                                                       %
+% Name File:  dist2sec.m                                                %
+% Purpose: Interpolation the turn and straight time for riding          %
+%           Gives out the turn and straighttime                         %
 %                                                                       %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 function [ straighttime, turntime ] = dist2sec(straight,turn,OoF,dapprox)
