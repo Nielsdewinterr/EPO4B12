@@ -1,8 +1,8 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Project: EPO-4                                                        %
 % Group: B11, Out, Klein, Kruijsse, De Winter                           %
-% Name File:                                                            %
-% Purpose:                                                              %
+% Name File: Connect.m                                                  %
+% Purpose: Connecting to the car with asking for which comport          %
 %                                                                       %
 %                                                                       %
 %                                                                       %
