@@ -1,16 +1,16 @@
 function [x,y,rot] = Objectontwijk(x,y,rot)
 
-distanceobject = 1;%distance object
-toclose=.4;%min distance after which the car should drive back a few decimeters
-    [distL,distR]=EPOfunctions.status();
+    distanceobject = 1;%distance object
+    toclose=.4;%min distance after which the car should drive back a few decimeters
+    [distL,distR]=EPOfunctions.status()
     distL=distL/100;
     distR=distR/100;
-%     plot(x,y,'o')
+    plot(x,y,'o')
 if(distL == 0)
-    distL = 1000
+    distL = 1000;
 end
 if(distR == 0)
-    distR = 1000
+    distR = 1000;
 end
     if((distL < distanceobject) && (distR < distanceobject))
         xobj = x + ((distL+distR)/2)*cosd(rot);
@@ -86,35 +86,37 @@ end
 end
 
 function backoff()
-EPOCommunications('transmit','D150');
-EPOCommunications('transmit','M143');
-pause(1.8)
-EPOCommunications('transmit','M158');
-pause(.2)
-EPOCommunications('transmit','M150');
+111
+% % EPOCommunications('transmit','D150');
+% % EPOCommunications('transmit','M143');
+% % pause(1.8)
+% % EPOCommunications('transmit','M158');
+% % pause(.2)
+% % EPOCommunications('transmit','M150');
 end
 
 function Linksaf()
-10000
-EPOCommunications('transmit','D200');
-EPOCommunications('transmit','M157');
-pause(1.2)
-EPOCommunications('transmit','M158');
-EPOCommunications('transmit','D150');
-pause(.6)
-EPOCommunications('transmit','M143');
-pause(.2)
-EPOCommunications('transmit','M150');
+222
+% % EPOCommunications('transmit','D200');
+% % EPOCommunications('transmit','M157');
+% % pause(1.2)
+% % EPOCommunications('transmit','M158');
+% % EPOCommunications('transmit','D150');
+% % pause(.6)
+% % EPOCommunications('transmit','M143');
+% % pause(.2)
+% % EPOCommunications('transmit','M150');
 end
 
 function Rechtsaf()
-EPOCommunications('transmit','D100');
-EPOCommunications('transmit','M157');
-pause(1.2)
-EPOCommunications('transmit','M158');
-EPOCommunications('transmit','D150');
-pause(.6)
-EPOCommunications('transmit','M143');
-pause(.2)
-EPOCommunications('transmit','M150');
+333
+% % EPOCommunications('transmit','D100');
+% % EPOCommunications('transmit','M157');
+% % pause(1.2)
+% % EPOCommunications('transmit','M158');
+% % EPOCommunications('transmit','D150');
+% % pause(.6)
+% % EPOCommunications('transmit','M143');
+% % pause(.2)
+% % EPOCommunications('transmit','M150');
 end

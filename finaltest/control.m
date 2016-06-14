@@ -54,6 +54,9 @@ if (place == 0 || isnan(place)) && (xor(D(2)>C(2),sind(rot)<0))          %straig
     hold on;
     scatter(D(1),D(2))
     text(D(1)+0.15,D(2),'Destination');
+    
+    xlim([-0.5 fieldx+0.5]);
+    ylim([-0.5 fieldy+0.5]);
 else
     if place>0
         lr=-1;
@@ -124,7 +127,10 @@ else
         text(C(1)+0.15,C(2),'Car');
         hold on;
         scatter(D(1),D(2))
-        text(D(1)+0.15,D(2),'Destination');
+        text(D(1)+0.15,D(2),'Destination');   
+        
+        xlim([-0.5 fieldx+0.5]);
+        ylim([-0.5 fieldy+0.5]);
     else
         OoF=0;
         %Now we nearly have the points on the circle, but instead of two points we need to
@@ -159,6 +165,9 @@ else
             turndist = (2*pi*AngleT1/360)*R;
             [~,turntime]=dist2sec(0,turndist,0,curve);
             turntimetheo = turndist/speedcirkel;
+            
+            xlim([-0.5 fieldx+0.5]);
+            ylim([-0.5 fieldy+0.5]);
         end
 
         %plot circle
@@ -200,5 +209,8 @@ else
         hold on;
         scatter(D(1),D(2))
         text(D(1)+0.15,D(2),'Destination');
+            
+        xlim([-0.5 fieldx+0.5]);
+        ylim([-0.5 fieldy+0.5]);
     end
 end

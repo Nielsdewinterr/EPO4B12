@@ -2,9 +2,9 @@ close all;
 clear all;
 vx=5.70; 
 vy=5.50;
-Connect
+% % % Connect
 pause(0.5)
-init;
+% % % init;
 
 load('ref8.mat');
 % prompt='Challenge?';
@@ -50,17 +50,17 @@ xlim([-0.5 vx+0.5]);
 ylim([-0.5 vy+0.5]);
 Voltage = 17.9;
 curve = timedistance(Voltage);
-challenge =3; 
+challenge = 2; 
 begin = [0,0.70,0];
 tussen = [1.9,3.6];
 eind = [4.6,3.95];
 xlim([0 vx]);
 ylim([0 vy]);
-if(challenge >1)
+if(challenge == 2)
     [x,y,rot]=testControlDrive(begin(1),begin(2),begin(3),tussen(1),tussen(2),ref1,curve,challenge);    
     input('continue?')
     testControlDrive(x,y,rot,eind(1),eind(2),ref1,curve,challenge);
-      input('eindpunt?')
+    input('eindpunt?')
 else
     testControlDrive(begin(1),begin(2),begin(3),eind(1),eind(2),ref1,curve,challenge);
 end
