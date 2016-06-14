@@ -2,10 +2,10 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Project: EPO-4                                                        %
 % Group: B11, Out, Klein, Kruijsse, De Winter                           %
-% Name File:                                                            %
-% Purpose:                                                              %
-%                                                                       %
-%                                                                       %
+% Name File: hoofdbestand_challenges.m                                  %
+% Purpose: Main-file, gets values from the field and give the start dir %
+%  and rotation to the drive file. Depending on the challenge type the  %
+%  object detection is activated and mid point is activated.            %
 %                                                                       %
 %                                                                       %
 %                                                                       %
