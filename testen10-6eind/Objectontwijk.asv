@@ -32,8 +32,8 @@ toclose=.4;%min distance after which the car should drive back a few decimeters
         yobj = y + distL*sind(rot)+0.2*sind(rot+90);
         if distL<toclose
            backoff(); 
-           x = x + .67*cosd(rot+180);
-           y = y + .67*sind(rot+180);
+           x = x + .5*cosd(rot+180);
+           y = y + .5*sind(rot+180);
            hold on
            plot(x,y,'p')
         end
@@ -46,16 +46,16 @@ toclose=.4;%min distance after which the car should drive back a few decimeters
         hold on
         plot([punt1obj(1),punt2obj(1)],[punt1obj(2),punt2obj(2)],'--')
         %car
-        x = x + cosd(rot-33);
-        y = y + sind(rot-33);
+        x = x + 1.20*cosd(rot-33);
+        y = y + 1.20*sind(rot-33);
         rot = rot-45;
     elseif(distR < distanceobject)
         xobj = x + distR*cosd(rot)+0.2*cosd(rot-90);
         yobj = y + distR*sind(rot)+0.2*sind(rot-90);
         if distR<toclose
            backoff(); 
-           x = x + .67*cosd(rot+180);
-           y = y + .67*sind(rot+180);
+           x = x + .5*cosd(rot+180);
+           y = y + .5*sind(rot+180);
            hold on
            plot(x,y,'p')
         end
