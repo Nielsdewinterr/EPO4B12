@@ -2,9 +2,9 @@ close all;
 clear all;
 vx=5.70; 
 vy=5.50;
-% % % Connect
+Connect
 pause(0.5)
-% % % init;
+init;
 
 load('ref8.mat');
 % prompt='Challenge?';

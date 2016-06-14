@@ -86,45 +86,42 @@ end
 end
 
 function backoff()
-111
-% % EPOCommunications('transmit','D150');
-% % EPOCommunications('transmit','M143');
-% % pause(1.8)
-% % EPOCommunications('transmit','M158');
-% % pause(.2)
-% % EPOCommunications('transmit','M150');
+EPOCommunications('transmit','D150');
+EPOCommunications('transmit','M143');
+pause(1.8)
+EPOCommunications('transmit','M158');
+pause(.2)
+EPOCommunications('transmit','M150');
 end
 
 function Linksaf()
-222
-% % EPOCommunications('transmit','D200');
-% % EPOCommunications('transmit','M157');
-% % pause(1.2)
-% % EPOCommunications('transmit','M158');
-% % EPOCommunications('transmit','D150');
-% % pause(.6)
-% % EPOCommunications('transmit','D100');
-% % EPOCommunications('transmit','M157');
-% % pause(1.2)
-% % EPOCommunications('transmit','D150');
-% % EPOCommunications('transmit','M143');
-% % pause(.2)
-% % EPOCommunications('transmit','M150');
+EPOCommunications('transmit','D200');
+EPOCommunications('transmit','M157');
+pause(1.2)
+EPOCommunications('transmit','M158');
+EPOCommunications('transmit','D150');
+pause(.6)
+EPOCommunications('transmit','D100');
+EPOCommunications('transmit','M157');
+pause(1.2)
+EPOCommunications('transmit','D150');
+EPOCommunications('transmit','M143');
+pause(.2)
+EPOCommunications('transmit','M150');
 end
 
 function Rechtsaf()
-333
-% % EPOCommunications('transmit','D100');
-% % EPOCommunications('transmit','M157');
-% % pause(1.2)
-% % EPOCommunications('transmit','M158');
-% % EPOCommunications('transmit','D150');
-% % pause(.6)
-% % EPOCommunications('transmit','D100');
-% % EPOCommunications('transmit','M157');
-% % pause(1.2)
-% % EPOCommunications('transmit','D150');
-% % EPOCommunications('transmit','M143');
-% % pause(.2)
-% % EPOCommunications('transmit','M150');
+EPOCommunications('transmit','D100');
+EPOCommunications('transmit','M157');
+pause(1.2)
+EPOCommunications('transmit','M158');
+EPOCommunications('transmit','D150');
+pause(.6)
+EPOCommunications('transmit','D100');
+EPOCommunications('transmit','M157');
+pause(1.2)
+EPOCommunications('transmit','D150');
+EPOCommunications('transmit','M143');
+pause(.2)
+EPOCommunications('transmit','M150');
 end
