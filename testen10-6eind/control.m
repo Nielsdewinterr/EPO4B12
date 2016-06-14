@@ -54,8 +54,6 @@ if (place == 0 || isnan(place)) && (xor(D(2)>C(2),sind(rot)<0))          %straig
     hold on;
     scatter(D(1),D(2))
     text(D(1)+0.15,D(2),'Destination');
-    xlim([0 fieldx]);
-    ylim([0 fieldy]);
 else
     if place>0
         lr=-1;
@@ -127,8 +125,6 @@ else
         hold on;
         scatter(D(1),D(2))
         text(D(1)+0.15,D(2),'Destination');
-        xlim([0 fieldx]);
-        ylim([0 fieldy]);
     else
         OoF=0;
         %Now we nearly have the points on the circle, but instead of two points we need to
@@ -204,7 +200,5 @@ else
         hold on;
         scatter(D(1),D(2))
         text(D(1)+0.15,D(2),'Destination');
-        xlim([0 fieldx]);
-        ylim([0 fieldy]);
     end
 end

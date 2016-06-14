@@ -36,6 +36,18 @@ load('THEref.mat');
 % for i=1:2
 %     eind(i)=str2double(b(i)) 
 % end
+hold on
+line([0 vx],[0 0])
+line([0 vx],[vy vy])
+line([0 0],[0 vy])
+line([vx vx],[0 vy])
+text(0,-.2,'Mic 2');
+text(0,vy+.2,'Mic 1');
+text(vx-.5,-.2,'Mic 3');
+text(vx-.5,vy+.2,'Mic 4');
+
+xlim([-0.5 vx+0.5]);
+ylim([-0.5 vy+0.5]);
 Voltage = 17.6;
 curve = timedistance(Voltage);
 challenge =3;
