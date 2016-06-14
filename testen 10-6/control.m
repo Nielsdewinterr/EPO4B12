@@ -1,3 +1,17 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Project: EPO-4                                                        %
+% Group: B11, Out, Klein, Kruijsse, De Winter                           %
+% Name File:                                                            %
+% Purpose:                                                              %
+%                                                                       %
+%                                                                       %
+%                                                                       %
+%                                                                       %
+%                                                                       %
+%                                                                       %
+%                                                                       %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 function [turntime,turntimetheo,orientation,lr,straighttime,straighttimetheo,OoF]=control(x,y,rot,xdest,ydest,curve)
 %this function assembles the car coordinates (x,y), the destination
 %coordinates(xdest,ydest) and the rotation of the car(rot - in degrees).

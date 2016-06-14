@@ -1,3 +1,16 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Project: EPO-4                                                        %
+% Group: B11, Out, Klein, Kruijsse, De Winter                           %
+% Name File:                                                            %
+% Purpose:                                                              %
+%                                                                       %
+%                                                                       %
+%                                                                       %
+%                                                                       %
+%                                                                       %
+%                                                                       %
+%                                                                       %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 function [x,y] = Objectontwijk(x,y,rot)
 fieldx = 5;
 fieldy = 5;

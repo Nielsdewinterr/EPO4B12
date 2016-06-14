@@ -1,3 +1,16 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Project: EPO-4                                                        %
+% Group: B11, Out, Klein, Kruijsse, De Winter                           %
+% Name File:                                                            %
+% Purpose:                                                              %
+%                                                                       %
+%                                                                       %
+%                                                                       %
+%                                                                       %
+%                                                                       %
+%                                                                       %
+%                                                                       %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 c_f = 15000;        %carrier frequency max 30 kHz
 bit_f = 5000;       %bit frequency
 c = '0x0C4ECE877';   %code

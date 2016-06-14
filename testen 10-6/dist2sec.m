@@ -1,3 +1,16 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Project: EPO-4                                                        %
+% Group: B11, Out, Klein, Kruijsse, De Winter                           %
+% Name File:                                                            %
+% Purpose:                                                              %
+%                                                                       %
+%                                                                       %
+%                                                                       %
+%                                                                       %
+%                                                                       %
+%                                                                       %
+%                                                                       %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 function [ straighttime, turntime ] = dist2sec(straight,turn,OoF,dapprox)
 
 x = interp1([0,0.5,1,1.5,2,2.5,3,6],dapprox(1,1:8),[0:0.01:6],'spline');
