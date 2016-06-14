@@ -3,7 +3,7 @@ function [r12,r13,r14,r23,r24,r34] =TDOA(yest1,yest2,yest3,yest4,ref1)
 speedsound=340.29;
 Fs=48000;
 delta=1000;
-tresh=0.8; %treshold for reflections
+tresh=0.7; %treshold for reflections
 
 yest1=[zeros(1000,1);yest1;zeros(1000,1)];
 yest2=[zeros(1000,1);yest2;zeros(1000,1)];
