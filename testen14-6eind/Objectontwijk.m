@@ -1,10 +1,17 @@
 function [x,y,rot] = Objectontwijk(x,y,rot)
+
 distanceobject = 1;%distance object
 toclose=.4;%min distance after which the car should drive back a few decimeters
-    [distL,distR]=EPOfunctions.status()
-    distL=distL/100
-    distR=distR/100
+    [distL,distR]=EPOfunctions.status();
+    distL=distL/100;
+    distR=distR/100;
 %     plot(x,y,'o')
+if(distL == 0)
+    distL = 1000
+end
+if(distR == 0)
+    distR = 1000
+end
     if((distL < distanceobject) && (distR < distanceobject))
         xobj = x + ((distL+distR)/2)*cosd(rot);
         yobj = y + ((distL+distR)/2)*sind(rot);
@@ -71,6 +78,8 @@ toclose=.4;%min distance after which the car should drive back a few decimeters
         x = x + .96*cosd(rot+33);
         y = y + .96*sind(rot+33);
         rot = rot+45;
+    else
+        return;
     end
     hold on
     plot(x,y,'*c')
@@ -86,6 +95,7 @@ EPOCommunications('transmit','M150');
 end
 
 function Linksaf()
+10000
 EPOCommunications('transmit','D200');
 EPOCommunications('transmit','M157');
 pause(1.2)

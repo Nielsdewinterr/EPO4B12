@@ -12,13 +12,14 @@ methods(Static)
         while(i<l)
             switch char(getdata(i));
                 case 'L'
-                    distL = str2num(cell2mat(getdata(find(strcmp('L',getdata))+1)));
+                    distL = str2num(cell2mat(getdata(find(strcmp('L',getdata))+1)))
                 case 'R'
-                    distR = str2num(cell2mat(getdata(find(strcmp('R',getdata))+1)));
+                    distR = str2num(cell2mat(getdata(find(strcmp('R',getdata))+1)))
                 otherwise
             end
             i=i+1;
         end 
+        input('continue object?','s')
     end
 end
 end

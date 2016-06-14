@@ -42,7 +42,7 @@ end
            return; 
         end
         if (challenge==3)
-            [x,y,~]=Objectontwijk(x,y,rot);
+            [x,y,rot]=Objectontwijk(x,y,orientation);
             [turntime,turntimetheo,orientation,lr,~,~,~] = control(x,y,rot,xdest,ydest,curve);
             [x,y]=turn(lr,x,y,rot,turntimetheo,turntime,speedcirkel,R);
         end
@@ -63,7 +63,7 @@ end
            return; 
         end
         if (challenge==3)
-            [x,y,~]=Objectontwijk(x,y,rot);
+            [x,y,rot]=Objectontwijk(x,y,rot);
             [turntime,turntimetheo,orientation,lr,~,~,~] = control(x,y,rot,xdest,ydest,curve);
             [x,y]=turn(lr,x,y,rot,turntimetheo,turntime,speedcirkel,R);
         end

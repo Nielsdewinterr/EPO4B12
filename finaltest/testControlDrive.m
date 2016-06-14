@@ -42,7 +42,7 @@ end
            return; 
         end
         if (challenge==3)
-            [x,y,rot]=Objectontwijk(x,y,rot);
+            [x,y,~]=Objectontwijk(x,y,orientation);
             [turntime,turntimetheo,orientation,lr,~,~,~] = control(x,y,rot,xdest,ydest,curve);
             [x,y]=turn(lr,x,y,rot,turntimetheo,turntime,speedcirkel,R);
         end
@@ -63,7 +63,7 @@ end
            return; 
         end
         if (challenge==3)
-            [x,y,rot]=Objectontwijk(x,y,rot);
+            [x,y,~]=Objectontwijk(x,y,orientation);
             [turntime,turntimetheo,orientation,lr,~,~,~] = control(x,y,rot,xdest,ydest,curve);
             [x,y]=turn(lr,x,y,rot,turntimetheo,turntime,speedcirkel,R);
         end
@@ -79,7 +79,7 @@ end
        return; 
     end
     if (challenge==3)
-        [x,y,rot]=Objectontwijk(x,y,rot);
+        [x,y,~]=Objectontwijk(x,y,orientation);
         [turntime,turntimetheo,orientation,lr,straighttime,straighttimetheo,~] = control(x,y,rot,xdest,ydest,curve);
         [x,y]=turn(lr,x,y,rot,turntimetheo,turntime,speedcirkel,R);
     end
@@ -96,58 +96,58 @@ end
     [x,y,orientation]=tdoatest2(x,y,orientation,xrota,yrota,ref);
 
 function [x,y]=tdoatest(x,y,ref)
-% % % %     xtdoa = x%+((rand-0.5)/4);
-% % % %     ytdoa = y%+((rand-0.5)/4);
-% % %           EPOCommunications('transmit','A1');
-% % %           inputbuffer=audio_recieve();
-% % %           EPOCommunications('transmit','A0');
-% % %         [r12,~,r14,r23,~,r34] = TDOA(inputbuffer(:,1),inputbuffer(:,2),inputbuffer(:,3),inputbuffer(:,4),ref);
-% % %         [xtdoa,ytdoa] = linnie(r12,r14,r23,r34);
-% % %     if not(isnan(xtdoa)||isnan(ytdoa))
-% % %         plot(x,y,'c*')
-% % %         plot(xtdoa,ytdoa,'x')
-% % %         if sqrt((x-xtdoa)^2+(y-ytdoa)^2)<0.7
-% % %             x=xtdoa;
-% % %             y=ytdoa;
-% % %         end
-% % %     end
+%     xtdoa = x%+((rand-0.5)/4);
+%     ytdoa = y%+((rand-0.5)/4);
+          EPOCommunications('transmit','A1');
+          inputbuffer=audio_recieve();
+          EPOCommunications('transmit','A0');
+        [r12,~,r14,r23,~,r34] = TDOA(inputbuffer(:,1),inputbuffer(:,2),inputbuffer(:,3),inputbuffer(:,4),ref);
+        [xtdoa,ytdoa] = linnie(r12,r14,r23,r34);
+    if not(isnan(xtdoa)||isnan(ytdoa))
+        plot(x,y,'c*')
+        plot(xtdoa,ytdoa,'x')
+        if sqrt((x-xtdoa)^2+(y-ytdoa)^2)<0.7
+            x=xtdoa;
+            y=ytdoa;
+        end
+    end
     
 function [x,y,orientation]=tdoatest2(x,y,orientation, xrota,yrota,ref)
-% % % %     xtdoa = x%+((rand-0.5)/4);
-% % % %     ytdoa = y%+((rand-0.5)/4);
-% % %           EPOCommunications('transmit','A1');
-% % %           inputbuffer=audio_recieve();
-% % %           EPOCommunications('transmit','A0')
-% % %         [r12,~,r14,r23,~,r34] = TDOA(inputbuffer(:,1),inputbuffer(:,2),inputbuffer(:,3),inputbuffer(:,4),ref);
-% % %         [xtdoa,ytdoa] = linnie(r12,r14,r23,r34);
-% % %         
-% % %         plot(x,y,'c*')
-% % %         plot(xtdoa,ytdoa,'x')
-% % %         if sqrt((x-xtdoa)^2+(y-ytdoa)^2)<0.7
-% % %             x=xtdoa;
-% % %             y=ytdoa;
-% % %         else
-% % %             EPOCommunications('transmit','A1');
-% % %             inputbuffer=audio_recieve();
-% % %             EPOCommunications('transmit','A0')
-% % %             [r12,~,r14,r23,~,r34] = TDOA(inputbuffer(:,1),inputbuffer(:,2),inputbuffer(:,3),inputbuffer(:,4),ref);
-% % %             [xtdoa,ytdoa] = linnie(r12,r14,r23,r34);
-% % %             plot(x,y,'c*')
-% % %             plot(xtdoa,ytdoa,'x')
-% % %             if sqrt((x-xtdoa)^2+(y-ytdoa)^2)<0.7
-% % %                 x=xtdoa;
-% % %                 y=ytdoa;
-% % %             end
-% % %         end
-% % %         xrotb=x;
-% % %         yrotb=y;
-% % %         if sqrt((xrota-xrotb)^2+(yrota-yrotb)^2)>0.3
-% % %             if xrota<xrotb
-% % %             orientation = real(atand((yrota-yrotb)/(xrota-xrotb)));
-% % %             else
-% % %             orientation = real(atand((yrota-yrotb)/(xrota-xrotb))+180);
-% % %             end
-% % %         end
+%     xtdoa = x%+((rand-0.5)/4);
+%     ytdoa = y%+((rand-0.5)/4);
+          EPOCommunications('transmit','A1');
+          inputbuffer=audio_recieve();
+          EPOCommunications('transmit','A0')
+        [r12,~,r14,r23,~,r34] = TDOA(inputbuffer(:,1),inputbuffer(:,2),inputbuffer(:,3),inputbuffer(:,4),ref);
+        [xtdoa,ytdoa] = linnie(r12,r14,r23,r34);
+        
+        plot(x,y,'c*')
+        plot(xtdoa,ytdoa,'x')
+        if sqrt((x-xtdoa)^2+(y-ytdoa)^2)<0.7
+            x=xtdoa;
+            y=ytdoa;
+        else
+            EPOCommunications('transmit','A1');
+            inputbuffer=audio_recieve();
+            EPOCommunications('transmit','A0')
+            [r12,~,r14,r23,~,r34] = TDOA(inputbuffer(:,1),inputbuffer(:,2),inputbuffer(:,3),inputbuffer(:,4),ref);
+            [xtdoa,ytdoa] = linnie(r12,r14,r23,r34);
+            plot(x,y,'c*')
+            plot(xtdoa,ytdoa,'x')
+            if sqrt((x-xtdoa)^2+(y-ytdoa)^2)<0.7
+                x=xtdoa;
+                y=ytdoa;
+            end
+        end
+        xrotb=x;
+        yrotb=y;
+        if sqrt((xrota-xrotb)^2+(yrota-yrotb)^2)>0.3
+            if xrota<xrotb
+            orientation = real(atand((yrota-yrotb)/(xrota-xrotb)));
+            else
+            orientation = real(atand((yrota-yrotb)/(xrota-xrotb))+180);
+            end
+        end
             
 function arrived = checkdistance(x,y,xdest,ydest)
     if sqrt((x-xdest)^2+(y-ydest)^2)<.2
