@@ -29,6 +29,11 @@ cut2=abs(x23-x14);
 [mini sampx]=min(cut2);
 x1=(x23(sampx)+x14(sampx))/2;
 
+if isreal(y12)==0 | isreal(y34)==0 | isreal(x23)==0 | isreal(x14)==0
+    x1=10;
+    y1=10;
+end
+
 % close all
 % hold on
 % line([0 xlim1],[0 0])
