@@ -1,14 +1,14 @@
 
 function [x1,y1]=linnie(r12,r14,r23,r34)
 %--------------------------------
-xlim1=5.7
-ylim1=5.5
+xlim1=5.7;
+ylim1=5.5;
 %---------------------------------
 
-a=r12
-b=r34
-c=r23
-d=r14
+a=r12;
+b=r34;
+c=r23;
+d=r14;
 
 x=[0:0.01:xlim1];
 y=[0:0.01:ylim1];
@@ -22,12 +22,12 @@ x14=  sign(d)*1/2*sqrt((d^4-4*d^2*(-y+ylim1).^2-xlim1^2*d^2)/(d^2-xlim1^2))+xlim
 
 cut1=abs(y12-y34); 
 [mini sampy]=min(cut1);
-y1=(y12(sampy)+y34(sampy))/2
+y1=(y12(sampy)+y34(sampy))/2;
 
 
 cut2=abs(x23-x14);
 [mini sampx]=min(cut2);
-x1=(x23(sampx)+x14(sampx))/2
+x1=(x23(sampx)+x14(sampx))/2;
 
 % close all
 % hold on
